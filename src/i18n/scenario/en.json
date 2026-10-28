@@ -1,0 +1,312 @@
+{
+  "screens": [
+    {
+      "type": "home",
+      "texts": [
+        "Welcome to the Mystery in Bruguières adventure! An interactive journey in which you will discover Bruguières through a mysterious investigation… When you are ready, tap the text to carry on…",
+        "Dear adventurer… If you are reading these words, then Time has kindly agreed to listen to me. My name is Auguste Meridius, master clockmaker and keeper of memory of Bruguières. I have mislaid a memory… a precious memory, hidden in the very places that once made the heart of this town beat.",
+        "A riddle. A race against forgetting. A quest… for lost time.",
+        "Are you clever enough to find it again? Follow me, and listen closely to my words. Each place will reveal a number to you, and those numbers, once gathered together… will awaken the past."
+      ]
+    },
+    {
+      "type": "explanation",
+      "texts": [
+        "This is where it all begins: there is no deciphering the messages of the past without returning to the heart of the town. A landmark, yet one that looks to the future.",
+        "The town hall of Bruguières, the beating heart of town life. Did you know that the town hall has not always stood here, and that in the 1950s the building housed public baths and showers? And even something else…",
+        "So now is the time to travel back in time and dig into the memory of Bruguières. You can make your journey on foot or even by bike.",
+        "Did you know that Bruguières takes its name from the heather (“brugues”) that once bloomed on its hillsides? The Occitan word “bruguièra” means exactly that: a patch of land where heather grows.",
+        "You will find the same idea in the names of neighbouring towns such as Lespinasse (thorns), Castelginest (broom) or Fenouillet (fennel)…"
+      ]
+    },
+    {
+      "type": "explanation",
+      "texts": [
+        "For your journey, I am entrusting you with this special radar, which will guide you to the important places. It will help you get closer to each clue.",
+        "Use it wisely, for every spot you discover will bring you closer to the truth…",
+        "Know too that you can stop the adventure at any moment and pick it up again later. Now, it's your turn to play!"
+      ]
+    },
+    {
+      "type": "radar",
+      "latitude": 43.727059034536445,
+      "longitude": 1.4119849607099955,
+      "message": "Head to the town hall"
+    },
+    {
+      "type": "quiz",
+      "intro": "Well done, you have reached the first key place!",
+      "question": "Look at the plaque about the old well (in French, “puits”). How long is each side of the square, in metres?",
+      "choices": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "answer": "2"
+    },
+    {
+      "type": "explanation",
+      "texts": [
+        "Leave the town hall and its reflections behind and make your way to an older, quieter neighbourhood. Over there, the silence has hooves.",
+        "You will know you have arrived when your eyes meet those of a strange carved sentry: a horse's head, frozen in time, keeping watch over a sleeping house.",
+        "I have always loved this place. When I was a child, I called it the house of the steed. Its architecture has always had a taste for repetition, for patterns hidden in the stone. Look carefully. The front of the house has a rhythm, like breathing: passageways, arches, porches… so many silent mouths ready to give up their secret.",
+        "Count them. These openings whisper a number to you. And that number… is a key."
+      ]
+    },
+    {
+      "type": "radar",
+      "latitude": 43.7278743777216,
+      "longitude": 1.4117646606429972,
+      "message": "Head to the house with the horse's head"
+    },
+    {
+      "type": "quiz",
+      "intro": "Well done, you have found the house of the stone horse!",
+      "question": "How many porches can you count on this strange facade?",
+      "choices": [
+        "6",
+        "8",
+        "9",
+        "10",
+        "12"
+      ],
+      "answer": "9"
+    },
+    {
+      "type": "explanation",
+      "texts": [
+        "Let's leave the steeds aside and go and cool off.",
+        "There is an ornamental water feature not far from here. It is part of a large project to redesign the main square of Bruguières.",
+        "This is also where Santa's reindeer is welcomed in December… Can you find this fountain?"
+      ]
+    },
+    {
+      "type": "radar",
+      "latitude": 43.72744077745599,
+      "longitude": 1.4118716541325393,
+      "message": "Head to the fountain with the steps"
+    },
+    {
+      "type": "quiz",
+      "intro": "You have reached the fountain, well done!",
+      "question": "How many steps can you count under this trickling water?",
+      "choices": [
+        "4",
+        "6",
+        "8",
+        "12",
+        "16"
+      ],
+      "answer": "8"
+    },
+    {
+      "type": "explanation",
+      "texts": [
+        "There is a place where minds gather, where words sleep on shelves and where silence reigns supreme.",
+        "This place of knowledge is guarded by a creature. A gentle giant with big ears, frozen in stone.",
+        "Some children give it hugs, others pull faces at it, and many climb onto its back; but it never flinches. I saw it arrive. It was a special day, carved into my memory as if into rock. An unveiling, simple and modest, but full of promise.",
+        "This animal was welcomed like a wise old man. Ever since, it has watched over the readers, the musicians and the athletes. Look carefully. A plaque will tell you more…"
+      ]
+    },
+    {
+      "type": "radar",
+      "latitude": 43.72433697207272,
+      "longitude": 1.4104597659614353,
+      "message": "Head to the media library"
+    },
+    {
+      "type": "quiz",
+      "intro": "You are standing before the stone guardian, the silent elephant.",
+      "question": "On what day in November was the elephant unveiled? (The plaque is in French: November is “novembre”.)",
+      "choices": [
+        "12",
+        "17",
+        "19",
+        "21",
+        "25"
+      ],
+      "answer": "21"
+    },
+    {
+      "type": "explanation",
+      "texts": [
+        "Sometimes mysteries nestle in the simplest of places… A patch of green, a few benches, a playground, and a peace that even the wind respects. It was in a little park just like this one that I used to come and sit, listening to the world breathe. Here, everything seems frozen, and yet everything moves in silence.",
+        "But this time, don't watch the passers-by. Look for the light. There are silent sentries, placed here to keep watch when night falls. They are green, like old fairy tales or the magic lanterns of my childhood.",
+        "Counting these lanterns is like counting the beats of a forgotten heart. Don't get it wrong: this is a light that shows you the way forward."
+      ]
+    },
+    {
+      "type": "radar",
+      "latitude": 43.72501828891252,
+      "longitude": 1.4162284508989935,
+      "message": "Head to Square Bellevue"
+    },
+    {
+      "type": "quiz",
+      "intro": "The little park wraps you in its calm… but it hides a shining secret.",
+      "question": "How many green lamps can you count in this park? Before you answer, turn the sound up!!",
+      "choices": [
+        "12",
+        "14",
+        "15",
+        "17",
+        "18"
+      ],
+      "answer": "17"
+    },
+    {
+      "type": "explanation",
+      "texts": [
+        "You have moved a little further along in this quest! If you turned the sound up, you should hear some music…",
+        "But what is it?",
+        "As a resident of Bruguières, I know this tune well. It often wakes me up in the morning, with its slightly out-of-tune little notes.",
+        "I think the clue is clear. Is your radar any help?"
+      ],
+      "sound": "bells"
+    },
+    {
+      "type": "radar",
+      "latitude": 43.7276202266518,
+      "longitude": 1.4106130434146333,
+      "message": "Head to the church"
+    },
+    {
+      "type": "quiz",
+      "intro": "You are in front of the church. Look at its wall belfry, typical of the Toulouse area.",
+      "question": "How many windows (bell openings) does it have?",
+      "choices": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "answer": "5"
+    },
+    {
+      "type": "explanation",
+      "texts": [
+        "Did you know that a theft once took place in this church? In 1557, three people stole the cloak from the statue of the Virgin Mary. Legend has it that the bell began to ring all by itself, alerting the neighbours, who discovered the theft. The thieves were later found in Grenade, trying to sell their loot.",
+        "Now you are drawing near to the whispers of the past. A place where water was not for fun, but a chore, a duty, a moment shared between secrets and laundry: the old wash-house. I often stopped there, not to wash, but to listen. Stones remember hands, you know. They have kept the raised voices, the secrets that slipped out, the heavy silences.",
+        "Look carefully. This is not a monument, it is a stage. Each washing stone is an actress frozen in the foam of time. Don't count the walls. Don't look at the roof. Count the stones. The ones people scrubbed on, rinsed on, chatted over.",
+        "Did you know that this wash-house is fed by a spring made of water seeping down from the hillsides? It is called the Fontaine de Bruguières (the Bruguières Spring)."
+      ]
+    },
+    {
+      "type": "radar",
+      "latitude": 43.728459129275315,
+      "longitude": 1.4091807616692806,
+      "message": "Head to the wash-house"
+    },
+    {
+      "type": "quiz",
+      "intro": "You are in front of the wash-house, built in the 19th century.",
+      "question": "How many washing stones can you count in this wash-house?",
+      "choices": [
+        "3",
+        "4",
+        "5",
+        "6",
+        "7"
+      ],
+      "answer": "4"
+    },
+    {
+      "type": "explanation",
+      "texts": [
+        "Now continue your journey towards a calm and peaceful place. Where the water embraces the sky, and footsteps echo in damp memories. There you will find a vast, tranquil mirror, home to winged gliders gurgling their secrets on the ripples.",
+        "But you don't understand this place by staying at ground level. You need to gain some height. Not by flying, no. By climbing. Slowly. You'll see, a stone perch rises there.",
+        "Climb up. And count. Each step towards the top is a syllable of the past. I have often climbed that staircase, not for the exercise, but to think…",
+        "… and to watch the ducks, I confess."
+      ]
+    },
+    {
+      "type": "radar",
+      "latitude": 43.72988285274553,
+      "longitude": 1.4065839739318746,
+      "message": "Head to the perch at the leisure park"
+    },
+    {
+      "type": "quiz",
+      "intro": "Well done, you made it.",
+      "question": "How many steps did you climb to reach the top?",
+      "choices": [
+        "5",
+        "7",
+        "9",
+        "11",
+        "15"
+      ],
+      "answer": "7"
+    },
+    {
+      "type": "explanation",
+      "texts": [
+        "Before you gather your numbers, grant me one last detour. Very close to here is a place my memory does not know… and that is exactly why it intrigues me.",
+        "Look for a stone table. Not a table for eating at: a table where people sit face to face, hardly say a word, and push little wooden armies across a board of light and dark squares.",
+        "Chess… the only game in the world played with a two-faced clock: while one player thinks, the other's time stands still. You will understand why a clockmaker like me cannot walk past without lingering.",
+        "But beware: this table is craftier than it looks. Don't trust what you think you know about a chessboard. Count its squares. All of its squares, right up to the edges, without missing a single one."
+      ]
+    },
+    {
+      "type": "radar",
+      "latitude": 43.731519116926385,
+      "longitude": 1.4057092818924328,
+      "message": "Head to the chess table"
+    },
+    {
+      "type": "quiz",
+      "intro": "Here you are at the games table.",
+      "question": "How many squares are there on the board engraved on this table?",
+      "choices": [
+        "36",
+        "49",
+        "81",
+        "100",
+        "121"
+      ],
+      "answer": "100"
+    },
+    {
+      "type": "explanation",
+      "texts": [
+        "A hundred squares! Ten rows of ten. Yet a chessboard only has sixty-four… Look at the border: its colour changes slightly. This table hides two games in one: the large board for draughts (checkers), and the chessboard tucked away at its heart.",
+        "I'll admit it plainly: the second one is my favourite. Draughts is a pleasant pastime, but chess is the clockmaker's game, the one where every second of thought comes at a price.",
+        "And yet the real secret of this table is not engraved on it. Do you know who put it here? Not a king, not a dignitary, not even a mayor: the people of Bruguières themselves.",
+        "Every year, the town hands part of its budget over to its residents: they suggest projects, they vote, and the winning ones come to life. This table is one of them, and its twin sister is waiting for you over by the media library.",
+        "So here is a place that belongs not to the past of Bruguières, but to the story its people are still writing. All the same, remember those hundred squares: that will be your last number."
+      ]
+    },
+    {
+      "type": "explanation",
+      "texts": [
+        "Well done, you have moved a little further along in this quest! Let me remind you of the numbers you had to find.",
+        "2 metres, 9 porches, 8 steps, 21 November, 17 green lamps, 5 windows, 4 washing stones, 7 steps and 100 squares. To solve the riddle, you have a few simple calculations to do.",
+        "These numbers must be turned into letters using their position in the alphabet. And then you will have the mystery word…"
+      ]
+    },
+    {
+      "type": "final_puzzle"
+    },
+    {
+      "type": "explanation",
+      "texts": [
+        "Your quest is now complete, congratulations. The word to find was GAMOUNA.",
+        "The numbers you collected, the places you explored, the mysteries you solved… all of it was much more than a simple treasure hunt.",
+        "You have walked in the footsteps of the past, awakened sleeping memories and brought to life the story of a village that hides many secrets behind its quiet stones.",
+        "You should know that GAMOUNA, in the Languedoc dialect of Occitan, means “the Monks' Ford”. Yes, just like the nearby road and the brewery you can see in the distance, whose names refer to it.",
+        "In the old days, you had to pay to cross the Hers by the bridge, so people waded across the river at the ford to reach the monastery of Lespinasse, hence the name Gamouna…",
+        "Thank you for helping me relive these moments from the past. I, Auguste Meridius, can now rest in peace. But above all… never forget that every place has a story, that every stone has a memory, and that sometimes, a single step is enough to bring a forgotten world back to life."
+      ]
+    },
+    {
+      "type": "final",
+      "texts": [
+        "Thank you for playing Mystery in Bruguières.",
+        "May your footsteps carry you on to many more adventures…"
+      ]
+    }
+  ]
+}
