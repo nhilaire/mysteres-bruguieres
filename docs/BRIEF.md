@@ -22,7 +22,7 @@ Mark assumptions the user accepted as `(default accepted)`.
 - **Q:** Who is it for?
   **A:** Families (from the original brief).
 - **Q:** Is the route content (9 places, Auguste's texts, riddles, GAMOUNA) kept?
-  **A:** Kept as is (30 scenario screens), only translated into English. The port improves the form, not the substance. (default accepted)
+  **A:** Kept as is (34 scenario screens), only translated into English. The port improves the form, not the substance. (default accepted)
 
 ### Story (About screen)
 
