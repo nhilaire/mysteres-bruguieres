@@ -8,6 +8,10 @@ tags:
     clearState: true
     permissions:
       location: allow
+- extendedWaitUntil:
+    visible:
+      id: "consent-screen"
+    timeout: 30000
 - tapOn:
     id: "consent-refuse"
 - openLink: mysteresbruguieres://seed/4
@@ -18,6 +22,10 @@ tags:
 - stopApp
 - launchApp:
     stopApp: false
+- extendedWaitUntil:
+    visible:
+      id: "title-screen"
+    timeout: 30000
 - assertVisible:
     id: "title-progress"
 - assertVisible:

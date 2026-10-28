@@ -6,6 +6,10 @@ tags:
 # AC-01 second part.
 - launchApp:
     clearState: true
+- extendedWaitUntil:
+    visible:
+      id: "consent-screen"
+    timeout: 30000
 - tapOn:
     id: "consent-refuse"
 - assertVisible:
@@ -13,6 +17,10 @@ tags:
 - stopApp
 - launchApp:
     stopApp: false
+- extendedWaitUntil:
+    visible:
+      id: "title-screen"
+    timeout: 30000
 - assertVisible:
     id: "title-screen"
 - assertNotVisible:

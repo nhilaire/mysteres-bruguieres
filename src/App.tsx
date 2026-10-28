@@ -60,7 +60,8 @@ export default function App() {
         loadProgress(SCREEN_COUNT),
       ]);
       configureFeedback(storedFeedback);
-      if (storedConsent !== 'unknown') await applyConsent(storedConsent === 'granted');
+      // Not awaited: the first screen must not wait for Firebase (the choice applies at once inside applyConsent).
+      if (storedConsent !== 'unknown') void applyConsent(storedConsent === 'granted');
       if (alive) {
         setLanguageSetting(storedLanguage);
         setFeedback(storedFeedback);

@@ -6,6 +6,10 @@ tags:
 # AC-03.
 - launchApp:
     clearState: true
+- extendedWaitUntil:
+    visible:
+      id: "consent-screen"
+    timeout: 30000
 - tapOn:
     id: "consent-refuse"
 - tapOn:
@@ -25,6 +29,10 @@ tags:
 - stopApp
 - launchApp:
     stopApp: false
+- extendedWaitUntil:
+    visible:
+      id: "title-screen"
+    timeout: 30000
 - assertVisible: "Start the adventure"
 - openLink: mysteresbruguieres://seed/1
 - extendedWaitUntil:

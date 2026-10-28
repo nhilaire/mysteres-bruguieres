@@ -8,6 +8,10 @@ tags:
     clearState: true
     permissions:
       location: deny
+- extendedWaitUntil:
+    visible:
+      id: "consent-screen"
+    timeout: 30000
 - assertVisible:
     id: "consent-screen"
 - assertVisible:
