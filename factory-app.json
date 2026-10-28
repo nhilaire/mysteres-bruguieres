@@ -1,0 +1,16 @@
+{
+  "slug": "mysteres-bruguieres",
+  "displayName": "Mystère à Bruguières",
+  "package": "io.github.nhilaire.mysteresbruguieres",
+  "stack": null,
+  "description": "Family geolocated treasure hunt through the town of Bruguieres, narrated by a fictional clockmaker",
+  "languages": [
+    "fr",
+    "en"
+  ],
+  "fallbackLanguage": "en",
+  "displayNames": {
+    "en": "Mystery in Bruguières"
+  },
+  "factoryVersion": "1.0.0"
+}
