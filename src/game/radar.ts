@@ -52,3 +52,11 @@ export function arrivalMethod(kind: 'auto' | 'manual', hasFix: boolean): Arrival
   if (kind === 'auto') return 'auto';
   return hasFix ? 'manual' : 'manual_no_gps';
 }
+
+const DIAL_RANGE_M = 250;
+
+// Position of the target on the dial, 0 (centre) .. 1 (rim): square root so that the last metres are visible.
+export function dialRadius(distance: number): number {
+  if (!Number.isFinite(distance)) return 1;
+  return Math.min(1, Math.sqrt(Math.max(0, distance) / DIAL_RANGE_M));
+}

@@ -1,6 +1,7 @@
 import {
   ARRIVAL_RADIUS_M,
   arrivalMethod,
+  dialRadius,
   initialArrival,
   mapsDirectionsUrl,
   nextArrival,
@@ -95,5 +96,15 @@ describe('help buttons', () => {
     ['manual', false, 'manual_no_gps'],
   ] as const)('reports a %s arrival with fix=%s as %s', (kind, hasFix, method) => {
     expect(arrivalMethod(kind, hasFix)).toBe(method);
+  });
+});
+
+describe('dial position', () => {
+  it('puts the target on the rim beyond 250 m and in the centre on arrival', () => {
+    expect(dialRadius(400)).toBe(1);
+    expect(dialRadius(250)).toBe(1);
+    expect(dialRadius(0)).toBe(0);
+    expect(dialRadius(62.5)).toBeCloseTo(0.5, 6);
+    expect(dialRadius(Number.NaN)).toBe(1);
   });
 });
