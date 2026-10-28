@@ -5,7 +5,7 @@ Project slug: mysteres-bruguieres
 Final app name: Mystère à Bruguières
 Android package: io.github.nhilaire.mysteresbruguieres
 Version target: 0.1.0
-Last updated: 2026-10-28
+Last updated: 2026-10-28 (amended after the phone test: AC-36)
 
 > Written in English. Player-facing text is quoted in the "Player copy" section, in every language of the game
 > (`factory-app.json` "languages"; French is the reference).
@@ -196,6 +196,8 @@ flowchart TD
 
 ## Look, sound and feel
 
+- Android navigation bar (bottom bar) hidden during the game, a swipe from the bottom shows it briefly; the status
+  bar stays (time, battery). Asked by the user during the phone test (2026-10-28).
 - Portrait only. Two moods, kept from the source: in game "daylight" golden gradient `#ffe08a → #e0b84c → #b97a1a`
   with dark text; menu, About, Settings, consent and location screens "Auguste's workshop" ink and brass
   (`#150d04`/`#241708`/`#33210d`, gold `#ffd77a`/`#e5b04a`/`#a3701c`, parchment `#f6e8ca`).
@@ -326,6 +328,8 @@ identifiers, no position, no free text.
 - AC-33 [unit] Place arrivals report `method` = `auto` after an automatic arrival, `manual` for "I'm here!" with a
   location fix, `manual_no_gps` for "I'm here!" without location.
 - AC-34 [unit] The church narration screen plays the bells when sounds are on and plays nothing when sounds are off.
+- AC-36 [device] Given the game on the phone, the Android navigation bar is hidden (the status bar stays); a swipe from
+  the bottom shows it briefly; it is hidden again when coming back from the maps app or the settings.
 - AC-35 [manual] Screen transitions, Auguste's breathing portrait and his reactions feel livelier than the source
   game.
 
