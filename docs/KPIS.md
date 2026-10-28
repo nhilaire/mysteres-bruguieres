@@ -26,7 +26,7 @@ From docs/PRD.md "KPIs". Events and params: `src/telemetry/events.ts` (= PRD "Te
 | Crash-free users | % users without a fatal crash | Crashlytics > Dashboard | >= 99% |
 | ANR rate | app not responding events | Crashlytics > Dashboard (filter ANR) | < 0.5% |
 | Non-fatal errors | `reportError()` calls | Crashlytics > Non-fatals | low and stable |
-| APK size | arm64 release APK size | docs/evidence/v*/REPORT.md | < 40 MB (no Skia, no GL) |
+| APK size | arm64 release APK size | docs/evidence/v*/REPORT.md | < 45 MB (PRD, amended 2026-10-28) |
 | Cold start | launch to home screen | evidence report (device check) | < 3 s |
 
 ## Custom definitions to register in Analytics

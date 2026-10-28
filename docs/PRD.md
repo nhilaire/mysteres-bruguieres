@@ -244,8 +244,8 @@ identifiers, no position, no free text.
 ## Non-functional requirements
 
 - Performance: smooth on a mid-range Android phone (radar animation without visible jank), cold start < 3 s.
-- APK size (arm64): target < 40 MB (the source images weigh about 30 MB raw: they are recompressed/resized for the
-  bundle).
+- APK size (arm64): target < 45 MB (amended 2026-10-28 with the user: the first release weighs 41.3 MB, mostly the RN,
+  Firebase, SVG, Reanimated, location and sensors libraries; the game's images and sounds weigh about 2 MB).
 - Works fully offline: texts, images and sounds are bundled; only GPS is needed.
 - Battery: GPS and compass only on radar screens.
 - Testing deep link `mysteresbruguieres://seed/<screen>` (approved 2026-10-28): opens the game at a scenario screen with

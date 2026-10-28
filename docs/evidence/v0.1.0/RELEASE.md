@@ -14,4 +14,4 @@ Launch check: alive after 10 s, no fatal error
 
 - 2026-10-28, build 898f05f: the Android navigation bar (bottom bar) gets in the way -> hide it during the game.
   PRD AC-36 + plan T-24, implemented in 463d6a4 (config plugin on MainActivity, status bar kept).
-- 2026-10-28: APK arm64 is 41.3 MB, above the PRD target (< 40 MB): to decide with the user.
+- 2026-10-28: APK arm64 is 41.3 MB, above the PRD target (< 40 MB): the user accepted it, PRD target amended to < 45 MB.
