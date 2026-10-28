@@ -1,0 +1,31 @@
+appId: io.github.nhilaire.mysteresbruguieres
+name: Telemetry - accept consent, start the adventure, reach the first place (events checked in logcat by verify.mjs)
+tags:
+  - telemetry
+---
+# AC-27: adventure_start and place_reached.
+- launchApp:
+    clearState: true
+    permissions:
+      location: allow
+- tapOn:
+    id: "consent-accept"
+- tapOn:
+    id: "title-start"
+- extendedWaitUntil:
+    visible:
+      id: "game-step-0"
+    timeout: 10000
+- openLink: mysteresbruguieres://seed/3
+- tapOn:
+    text: "No thanks|Non merci|NO THANKS|NON MERCI"
+    optional: true
+- extendedWaitUntil:
+    visible:
+      id: "radar-screen"
+    timeout: 10000
+- tapOn:
+    id: "radar-im-here"
+- assertVisible:
+    id: "quiz-screen"
+- takeScreenshot: telemetry-riddle

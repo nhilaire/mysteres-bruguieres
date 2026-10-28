@@ -1,0 +1,45 @@
+appId: io.github.nhilaire.mysteresbruguieres
+name: Smoke - consent, title, location explainer, play without GPS, first narration, back to the menu
+tags:
+  - smoke
+---
+# AC-01 consent first, AC-06 never-started title, AC-07 location explainer then Play without GPS.
+- launchApp:
+    clearState: true
+    permissions:
+      location: deny
+- assertVisible:
+    id: "consent-screen"
+- assertVisible:
+    id: "consent-accept"
+- assertVisible:
+    id: "consent-refuse"
+- takeScreenshot: 01-consent
+- tapOn:
+    id: "consent-refuse"
+- runFlow: helpers/french.yaml
+- assertVisible:
+    id: "title-start"
+- assertNotVisible:
+    id: "title-continue"
+- takeScreenshot: readme-1-title
+- tapOn:
+    id: "title-start"
+- extendedWaitUntil:
+    visible:
+      id: "location-without-gps"
+    timeout: 10000
+- assertVisible:
+    id: "location-action"
+- takeScreenshot: 02-location-explainer
+- tapOn:
+    id: "location-without-gps"
+- assertVisible:
+    id: "game-step-0"
+- tapOn:
+    id: "narration-tap"
+- takeScreenshot: 03-narration
+- tapOn:
+    id: "game-menu"
+- assertVisible:
+    id: "title-screen"

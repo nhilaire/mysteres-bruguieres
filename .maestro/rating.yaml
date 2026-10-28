@@ -1,0 +1,20 @@
+appId: io.github.nhilaire.mysteresbruguieres
+name: Rating - one rating on the end screen, then the stars are read-only
+tags:
+  - end
+---
+# AC-24.
+- launchApp:
+    clearState: true
+- tapOn:
+    id: "consent-refuse"
+- runFlow: helpers/french.yaml
+- openLink: mysteresbruguieres://seed/33
+- extendedWaitUntil:
+    visible:
+      id: "end-screen"
+    timeout: 10000
+- tapOn:
+    id: "end-star-4"
+- assertVisible: "Merci pour ta note.*"
+- takeScreenshot: 10-rated

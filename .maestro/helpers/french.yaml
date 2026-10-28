@@ -1,0 +1,11 @@
+appId: io.github.nhilaire.mysteresbruguieres
+name: Helper - switch the game to French from the title screen
+---
+- tapOn:
+    id: "title-settings"
+- tapOn:
+    id: "settings-language-fr"
+- tapOn:
+    id: "settings-back"
+- assertVisible:
+    id: "title-screen"

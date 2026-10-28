@@ -1,0 +1,81 @@
+appId: io.github.nhilaire.mysteresbruguieres
+name: Final puzzle - type the 7 results, GAMOUNA appears, closing story, end screen with the score
+tags:
+  - puzzle
+---
+# AC-20.
+- launchApp:
+    clearState: true
+- tapOn:
+    id: "consent-refuse"
+- runFlow: helpers/french.yaml
+- openLink: mysteresbruguieres://seed/31
+- extendedWaitUntil:
+    visible:
+      id: "puzzle-screen"
+    timeout: 10000
+- assertVisible:
+    id: "auguste-reaction-focused"
+- tapOn:
+    id: "keypad-7"
+- tapOn:
+    id: "keypad-validate"
+- tapOn:
+    id: "keypad-1"
+- tapOn:
+    id: "keypad-validate"
+- tapOn:
+    id: "keypad-1"
+- tapOn:
+    id: "keypad-3"
+- tapOn:
+    id: "keypad-validate"
+- tapOn:
+    id: "keypad-1"
+- tapOn:
+    id: "keypad-5"
+- tapOn:
+    id: "keypad-validate"
+- tapOn:
+    id: "keypad-2"
+- tapOn:
+    id: "keypad-1"
+- tapOn:
+    id: "keypad-validate"
+- tapOn:
+    id: "keypad-1"
+- tapOn:
+    id: "keypad-4"
+- tapOn:
+    id: "keypad-validate"
+- tapOn:
+    id: "keypad-1"
+- tapOn:
+    id: "keypad-validate"
+- extendedWaitUntil:
+    visible:
+      id: "puzzle-solved"
+    timeout: 5000
+- assertVisible: "GAMOUNA"
+- assertVisible:
+    id: "auguste-reaction-surprised"
+- takeScreenshot: readme-3-gamouna
+- scrollUntilVisible:
+    element:
+      id: "puzzle-continue"
+- tapOn:
+    id: "puzzle-continue"
+- assertVisible:
+    id: "game-step-32"
+- repeat:
+    while:
+      notVisible:
+        id: "end-screen"
+    times: 30
+    commands:
+      - tapOn:
+          id: "narration-tap"
+- assertVisible:
+    id: "end-score"
+- assertVisible: ".*9.*/.*9"
+- takeScreenshot: 09-end

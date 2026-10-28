@@ -1,0 +1,25 @@
+appId: io.github.nhilaire.mysteresbruguieres
+name: Consent - asked once, then the title comes directly and the settings show the choice
+tags:
+  - consent
+---
+# AC-01 second part.
+- launchApp:
+    clearState: true
+- tapOn:
+    id: "consent-refuse"
+- assertVisible:
+    id: "title-screen"
+- stopApp
+- launchApp:
+    stopApp: false
+- assertVisible:
+    id: "title-screen"
+- assertNotVisible:
+    id: "consent-screen"
+- tapOn:
+    id: "title-settings"
+- assertVisible:
+    id: "settings-telemetry"
+    checked: false
+- takeScreenshot: 04-settings

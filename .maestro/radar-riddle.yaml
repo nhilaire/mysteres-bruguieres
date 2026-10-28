@@ -1,0 +1,60 @@
+appId: io.github.nhilaire.mysteresbruguieres
+name: Radar and riddle - a mocked position reaches the town hall, wrong then right answer
+tags:
+  - radar
+---
+# AC-14 automatic arrival with a mocked position, AC-17 wrong then right answer.
+- launchApp:
+    clearState: true
+    permissions:
+      location: allow
+- tapOn:
+    id: "consent-refuse"
+- runFlow: helpers/french.yaml
+- setLocation:
+    latitude: 43.72796
+    longitude: 1.4119849607099955
+- openLink: mysteresbruguieres://seed/3
+- tapOn:
+    text: "No thanks|Non merci|NO THANKS|NON MERCI"
+    optional: true
+- extendedWaitUntil:
+    visible:
+      id: "radar-screen"
+    timeout: 10000
+- assertVisible: "Étape 1 sur 9"
+- extendedWaitUntil:
+    visible: "[0-9]+.m"
+    timeout: 20000
+- takeScreenshot: readme-2-radar
+- setLocation:
+    latitude: 43.72715
+    longitude: 1.4119849607099955
+- setLocation:
+    latitude: 43.72710
+    longitude: 1.4119849607099955
+- setLocation:
+    latitude: 43.72708
+    longitude: 1.4119849607099955
+- extendedWaitUntil:
+    visible:
+      id: "quiz-screen"
+    timeout: 20000
+- takeScreenshot: 05-riddle
+- tapOn:
+    id: "quiz-choice-0"
+- assertVisible:
+    id: "quiz-wrong"
+- assertVisible:
+    id: "auguste-reaction-worried"
+- takeScreenshot: 06-riddle-wrong
+- extendedWaitUntil:
+    notVisible:
+      id: "quiz-red"
+    timeout: 5000
+- tapOn:
+    id: "quiz-choice-1"
+- extendedWaitUntil:
+    visible:
+      id: "game-step-5"
+    timeout: 5000

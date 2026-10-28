@@ -1,0 +1,21 @@
+appId: io.github.nhilaire.mysteresbruguieres
+name: About - story, developer line and version
+tags:
+  - about
+---
+# AC-28.
+- launchApp:
+    clearState: true
+- tapOn:
+    id: "consent-refuse"
+- runFlow: helpers/french.yaml
+- tapOn:
+    id: "title-about"
+- assertVisible:
+    id: "about-screen"
+- assertVisible: ".*traînant.*"
+- assertVisible:
+    id: "about-developer"
+- takeScreenshot: 12-about
+- scrollUntilVisible:
+    element: "Version [0-9]+[.][0-9]+[.][0-9]+"
