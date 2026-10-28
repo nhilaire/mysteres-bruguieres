@@ -33,3 +33,19 @@ jest.mock('expo-haptics', () => ({
   ImpactFeedbackStyle: { Light: 'light', Medium: 'medium', Heavy: 'heavy' },
   NotificationFeedbackType: { Success: 'success', Warning: 'warning', Error: 'error' },
 }));
+
+// Location: no permission and no fix unless a test says otherwise.
+jest.mock('expo-location', () => ({
+  getForegroundPermissionsAsync: jest.fn(() => Promise.resolve({ granted: false, status: 'undetermined', canAskAgain: true })),
+  requestForegroundPermissionsAsync: jest.fn(() => Promise.resolve({ granted: false, status: 'denied', canAskAgain: true })),
+  hasServicesEnabledAsync: jest.fn(() => Promise.resolve(true)),
+  enableNetworkProviderAsync: jest.fn(() => Promise.resolve()),
+  watchPositionAsync: jest.fn(() => Promise.resolve({ remove: jest.fn() })),
+  watchHeadingAsync: jest.fn(() => Promise.reject(new Error('no heading'))),
+  Accuracy: { High: 4 },
+}));
+
+jest.mock('expo-sensors', () => ({
+  Magnetometer: { isAvailableAsync: jest.fn(() => Promise.resolve(false)), addListener: jest.fn(() => ({ remove: jest.fn() })), setUpdateInterval: jest.fn() },
+  Accelerometer: { isAvailableAsync: jest.fn(() => Promise.resolve(false)), addListener: jest.fn(() => ({ remove: jest.fn() })), setUpdateInterval: jest.fn() },
+}));
