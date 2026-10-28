@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 import Animated, { FlipInXUp, useAnimatedStyle, useSharedValue, withSequence, withTiming, ZoomIn } from 'react-native-reanimated';
 
@@ -49,8 +49,13 @@ export function FinalPuzzleView({ numbers, puzzle, onChange, onContinue }: Props
   const shake = useSharedValue(0);
   const shakeStyle = useAnimatedStyle(() => ({ transform: [{ translateX: shake.value }] }));
 
+  // The revealed word sits below the lines: bring it into view.
+  const scroll = useRef<ScrollView>(null);
   useEffect(() => {
-    if (solved) playSound('chime');
+    if (!solved) return;
+    playSound('chime');
+    const id = setTimeout(() => scroll.current?.scrollToEnd({ animated: true }), 350);
+    return () => clearTimeout(id);
   }, [solved]);
 
   const validate = () => {
@@ -64,7 +69,12 @@ export function FinalPuzzleView({ numbers, puzzle, onChange, onContinue }: Props
     } else {
       playSound('wrong');
       vibrate('wrong');
-      shake.value = withSequence(withTiming(-10, { duration: 50 }), withTiming(10, { duration: 80 }), withTiming(-6, { duration: 70 }), withTiming(0, { duration: 60 }));
+      shake.value = withSequence(
+        withTiming(-10, { duration: 50 }),
+        withTiming(10, { duration: 80 }),
+        withTiming(-6, { duration: 70 }),
+        withTiming(0, { duration: 60 }),
+      );
     }
     onChange(state, result);
   };
@@ -79,73 +89,77 @@ export function FinalPuzzleView({ numbers, puzzle, onChange, onContinue }: Props
   const lastWrong = active >= 0 && puzzle.lines[active].wrong > 0;
 
   return (
-    <ScrollView contentContainerStyle={styles.container} testID="puzzle-screen">
-      <View style={styles.header}>
-        <AugustePortrait width={portraitWidth} reaction={solved ? 'surprised' : 'focused'} />
-        <View style={styles.headerText}>
-          <Text style={styles.title} accessibilityRole="header">
-            {t.puzzle.title}
-          </Text>
-          <Text style={styles.intro}>{t.puzzle.intro}</Text>
-        </View>
-      </View>
-
-      <View style={styles.card}>
-        <Text style={styles.label}>{t.puzzle.numbersLabel}</Text>
-        <View style={styles.numbers}>
-          {numbers.map((n, i) => (
-            <View key={i} style={styles.number}>
-              <Text style={styles.numberRank}>{t.puzzle.ordinal(i + 1)}</Text>
-              <Text style={styles.numberValue}>{n}</Text>
-            </View>
-          ))}
-        </View>
-        <View style={styles.alphabet}>
-          {ALPHABET.map((n) => (
-            <Text key={n} style={styles.alpha}>
-              {letterOf(n)}
-              <Text style={styles.alphaN}>{n}</Text>
+    <View style={styles.screen} testID="puzzle-screen">
+      <ScrollView ref={scroll} contentContainerStyle={styles.container}>
+        <View style={styles.header}>
+          <AugustePortrait width={portraitWidth} reaction={solved ? 'surprised' : 'focused'} />
+          <View style={styles.headerText}>
+            <Text style={styles.title} accessibilityRole="header">
+              {t.puzzle.title}
             </Text>
-          ))}
+            <Text style={styles.intro}>{t.puzzle.intro}</Text>
+          </View>
         </View>
-      </View>
 
-      <View style={styles.lines}>
-        {OPERATIONS.map((op, i) => {
-          const line = puzzle.lines[i];
-          const isActive = i === active;
-          const result = operationResult(op, numbers);
-          const row = (
-            <View style={[styles.line, isActive && styles.lineActive]} testID={`puzzle-line-${i}`}>
-              <Text style={styles.op}>{operationLabel(op, t.puzzle.ordinal)} =</Text>
-              <Text style={styles.result}>{line.solved ? result : isActive ? input || '…' : ''}</Text>
-              <View style={styles.letterBox}>
-                {line.solved && (
-                  <Animated.Text entering={FlipInXUp.duration(350)} style={styles.letter} testID={`puzzle-letter-${i}`}>
-                    {letterOf(result)}
-                  </Animated.Text>
-                )}
+        <View style={styles.card}>
+          <Text style={styles.label}>{t.puzzle.numbersLabel}</Text>
+          <View style={styles.numbers}>
+            {numbers.map((n, i) => (
+              <View key={i} style={styles.number}>
+                <Text style={styles.numberRank}>{t.puzzle.ordinal(i + 1)}</Text>
+                <Text style={styles.numberValue}>{n}</Text>
               </View>
-            </View>
-          );
-          return isActive ? (
-            <Animated.View key={i} style={shakeStyle}>
-              {row}
-            </Animated.View>
-          ) : (
-            <View key={i}>{row}</View>
-          );
-        })}
-      </View>
+            ))}
+          </View>
+          <View style={styles.alphabet}>
+            {ALPHABET.map((n) => (
+              <Text key={n} style={styles.alpha}>
+                {letterOf(n)}
+                <Text style={styles.alphaN}>{n}</Text>
+              </Text>
+            ))}
+          </View>
+        </View>
 
+        <View style={styles.lines}>
+          {OPERATIONS.map((op, i) => {
+            const line = puzzle.lines[i];
+            const isActive = i === active;
+            const result = operationResult(op, numbers);
+            const row = (
+              <View style={[styles.line, isActive && styles.lineActive]} testID={`puzzle-line-${i}`}>
+                <Text style={styles.op}>{operationLabel(op, t.puzzle.ordinal)} =</Text>
+                <Text style={styles.result}>{line.solved ? result : isActive ? input || '…' : ''}</Text>
+                <View style={styles.letterBox}>
+                  {line.solved && (
+                    <Animated.Text entering={FlipInXUp.duration(350)} style={styles.letter} testID={`puzzle-letter-${i}`}>
+                      {letterOf(result)}
+                    </Animated.Text>
+                  )}
+                </View>
+              </View>
+            );
+            return isActive ? (
+              <Animated.View key={i} style={shakeStyle}>
+                {row}
+              </Animated.View>
+            ) : (
+              <View key={i}>{row}</View>
+            );
+          })}
+        </View>
+
+        {solved && (
+          <Animated.View entering={ZoomIn.duration(500)} style={styles.reveal} testID="puzzle-solved">
+            <Text style={styles.solvedLabel}>{t.puzzle.solved}</Text>
+            <Text style={styles.word}>{OPERATIONS.map((op) => letterOf(operationResult(op, numbers))).join('')}</Text>
+          </Animated.View>
+        )}
+      </ScrollView>
       {solved ? (
-        <Animated.View entering={ZoomIn.duration(500)} style={styles.reveal} testID="puzzle-solved">
-          <Text style={styles.solvedLabel}>{t.puzzle.solved}</Text>
-          <Text style={styles.word}>{OPERATIONS.map((op) => letterOf(operationResult(op, numbers))).join('')}</Text>
-          <Button label={t.puzzle.continue} onPress={onContinue} testID="puzzle-continue" />
-        </Animated.View>
+        <Button label={t.puzzle.continue} onPress={onContinue} testID="puzzle-continue" />
       ) : (
-        <>
+        <View style={styles.panel}>
           {lastWrong && <Text style={styles.wrong}>{t.puzzle.wrong}</Text>}
           {canReveal(puzzle) && (
             <View style={styles.revealHelp}>
@@ -166,6 +180,8 @@ export function FinalPuzzleView({ numbers, puzzle, onChange, onContinue }: Props
                 <Text style={styles.keyText}>{d}</Text>
               </Pressable>
             ))}
+          </View>
+          <View style={styles.actions}>
             <Pressable
               testID="keypad-erase"
               accessibilityRole="button"
@@ -175,16 +191,22 @@ export function FinalPuzzleView({ numbers, puzzle, onChange, onContinue }: Props
             >
               <Text style={styles.keyText}>⌫</Text>
             </Pressable>
+            <View style={styles.validate}>
+              <Button label={t.puzzle.validate} onPress={validate} disabled={input === ''} testID="keypad-validate" />
+            </View>
           </View>
-          <Button label={t.puzzle.validate} onPress={validate} disabled={input === ''} testID="keypad-validate" />
-        </>
+        </View>
       )}
-    </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flexGrow: 1, gap: spacing.md, paddingBottom: spacing.md },
+  screen: { flex: 1, gap: spacing.sm },
+  container: { flexGrow: 1, gap: spacing.sm, paddingBottom: spacing.sm },
+  panel: { gap: spacing.sm },
+  actions: { flexDirection: 'row', gap: spacing.sm, alignItems: 'center', justifyContent: 'center' },
+  validate: { flex: 1 },
   header: { flexDirection: 'row', gap: spacing.md, alignItems: 'center' },
   headerText: { flex: 1, gap: spacing.xs },
   title: { color: daylight.text, fontSize: font.heading, fontWeight: '900' },
@@ -199,7 +221,14 @@ const styles = StyleSheet.create({
   alpha: { color: daylight.text, fontSize: 13, fontWeight: '800', width: 34, textAlign: 'center' },
   alphaN: { color: daylight.muted, fontSize: 10, fontWeight: '400' },
   lines: { gap: 6 },
-  line: { flexDirection: 'row', alignItems: 'center', backgroundColor: 'rgba(255,255,255,0.55)', borderRadius: 10, paddingHorizontal: spacing.sm, minHeight: 42 },
+  line: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'rgba(255,255,255,0.55)',
+    borderRadius: 10,
+    paddingHorizontal: spacing.sm,
+    minHeight: 42,
+  },
   lineActive: { backgroundColor: '#fff', borderWidth: 2, borderColor: workshop.goldDeep },
   op: { flex: 1, color: daylight.text, fontSize: font.body },
   result: { width: 52, textAlign: 'right', color: daylight.text, fontSize: font.body + 2, fontWeight: '900' },
@@ -209,7 +238,16 @@ const styles = StyleSheet.create({
   revealHelp: { gap: spacing.sm },
   hint: { color: daylight.text, fontSize: font.small, textAlign: 'center' },
   keypad: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm, justifyContent: 'center' },
-  key: { width: 62, height: 52, borderRadius: 12, backgroundColor: '#fff8e6', borderWidth: 2, borderColor: workshop.goldDeep, alignItems: 'center', justifyContent: 'center' },
+  key: {
+    width: 56,
+    height: 46,
+    borderRadius: 12,
+    backgroundColor: '#fff8e6',
+    borderWidth: 2,
+    borderColor: workshop.goldDeep,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   keyPressed: { backgroundColor: workshop.goldBright, transform: [{ scale: 0.95 }] },
   keyText: { color: daylight.text, fontSize: font.heading - 2, fontWeight: '800' },
   reveal: { alignItems: 'stretch', gap: spacing.md },

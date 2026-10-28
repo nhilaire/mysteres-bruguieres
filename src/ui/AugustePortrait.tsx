@@ -70,7 +70,7 @@ export function AugustePortrait({ width, pose = 0, reaction, talking = false }: 
             }}
           />
         ))}
-        {reaction && <Image source={REACTIONS[reaction]} style={StyleSheet.absoluteFill} resizeMode="cover" />}
+        {reaction && <Image source={REACTIONS[reaction]} style={{ position: 'absolute', left: 0, top: 0, width, height }} resizeMode="cover" />}
       </Animated.View>
     </View>
   );

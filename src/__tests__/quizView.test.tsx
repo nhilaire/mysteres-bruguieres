@@ -22,9 +22,13 @@ it('a wrong answer turns red with the head-scratching portrait, then allows a re
   expect(screen.getByTestId('auguste-reaction-worried')).toBeTruthy();
   expect(playSound).toHaveBeenCalledWith('wrong');
   expect(vibrate).toHaveBeenCalledWith('wrong');
+  // During the red state another tap is ignored; afterwards the player can try again.
+  await fireEvent.press(screen.getByTestId('quiz-choice-1'));
+  expect(screen.queryByTestId('quiz-right')).toBeNull();
   await act(async () => jest.advanceTimersByTime(WRONG_MS));
-  expect(screen.queryByTestId('quiz-wrong')).toBeNull();
   expect(onNext).not.toHaveBeenCalled();
+  await fireEvent.press(screen.getByTestId('quiz-choice-1'));
+  expect(screen.getByTestId('quiz-right')).toBeTruthy();
 });
 
 it('the right answer turns green with the happy portrait and moves on after 800 ms', async () => {

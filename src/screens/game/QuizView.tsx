@@ -25,6 +25,8 @@ export function QuizView({ quiz, solved, onAnswer, onNext }: Props) {
   const { t } = useI18n();
   const { width, height } = useWindowDimensions();
   const [feedback, setFeedback] = useState<Feedback>(null);
+  // The verdict (and Auguste's reaction) stays until the next answer; the red button only for WRONG_MS.
+  const [verdict, setVerdict] = useState<'right' | 'wrong' | null>(null);
 
   useEffect(() => {
     if (!feedback) return;
@@ -38,12 +40,13 @@ export function QuizView({ quiz, solved, onAnswer, onNext }: Props) {
     const result = onAnswer(choice);
     if (result === 'ignored') return;
     setFeedback({ choice, result });
+    setVerdict(result);
     playSound(result);
     vibrate(result);
   };
 
   const reaction: Reaction | undefined =
-    feedback?.result === 'right' || solved ? 'amazed' : feedback?.result === 'wrong' ? 'worried' : undefined;
+    verdict === 'right' || solved ? 'amazed' : verdict === 'wrong' ? 'worried' : undefined;
   const portraitWidth = Math.min(width * 0.36, height * 0.18, 170);
 
   return (
@@ -52,9 +55,9 @@ export function QuizView({ quiz, solved, onAnswer, onNext }: Props) {
         <AugustePortrait width={portraitWidth} reaction={reaction} pose={1} />
         <View style={styles.bubble}>
           <Text style={styles.intro}>{quiz.intro}</Text>
-          {feedback && (
-            <Text style={[styles.verdict, feedback.result === 'right' ? styles.rightText : styles.wrongText]} testID={`quiz-${feedback.result}`}>
-              {feedback.result === 'right' ? t.quiz.right : t.quiz.wrong}
+          {verdict && (
+            <Text style={[styles.verdict, verdict === 'right' ? styles.rightText : styles.wrongText]} testID={`quiz-${verdict}`}>
+              {verdict === 'right' ? t.quiz.right : t.quiz.wrong}
             </Text>
           )}
         </View>
@@ -81,12 +84,14 @@ export function QuizView({ quiz, solved, onAnswer, onNext }: Props) {
               onPress={() => choose(choice)}
               style={({ pressed }) => [styles.choice, pressed && styles.pressed, isRight && styles.right, isWrong && styles.wrong]}
             >
-              <Text style={[styles.choiceText, isRight && styles.rightText, isWrong && styles.wrongText]}>{choice}</Text>
+              <Text style={[styles.choiceText, isRight && styles.rightText, isWrong && styles.wrongText]} testID={isWrong ? 'quiz-red' : undefined}>
+                {choice}
+              </Text>
             </Pressable>
           );
         })}
       </View>
-      {!solved && !feedback && <Text style={styles.waiting}>{t.quiz.waiting}</Text>}
+      {!solved && !verdict && <Text style={styles.waiting}>{t.quiz.waiting}</Text>}
     </ScrollView>
   );
 }

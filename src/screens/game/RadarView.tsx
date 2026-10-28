@@ -119,7 +119,7 @@ export function RadarView({ target, step, onArrive, onLost }: Props) {
           arrived={arrived}
         />
       </View>
-      <Text style={[styles.distance, arrived && styles.arrived]} testID="radar-status">
+      <Text style={[hasFix || arrived ? styles.distance : styles.status, arrived && styles.arrived]} testID="radar-status">
         {status}
       </Text>
       {hasFix && cardinal && !arrived && <Text style={styles.direction}>{t.radar.direction(cardinal)}</Text>}
@@ -137,6 +137,7 @@ const styles = StyleSheet.create({
   message: { color: daylight.text, fontSize: font.heading - 2, fontWeight: '800', textAlign: 'center' },
   dial: { marginVertical: spacing.sm },
   distance: { color: daylight.text, fontSize: 40, fontWeight: '900' },
+  status: { color: daylight.text, fontSize: font.body + 2, fontWeight: '700', textAlign: 'center' },
   arrived: { color: daylight.success },
   direction: { color: daylight.text, fontSize: font.body, fontWeight: '600' },
   hint: { color: daylight.muted, fontSize: font.small, textAlign: 'center' },
