@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Linking, StyleSheet, View } from 'react-native';
 
 import { configureFeedback } from './feedback/feedback';
-import { initialProgress, isStarted, Progress } from './game/adventure';
+import { initialProgress, isStarted, parseSeedUrl, Progress, seedProgress } from './game/adventure';
 import { LanguageSetting } from './i18n';
 import { I18nProvider } from './i18n/I18nProvider';
 import { SCENARIOS } from './i18n/scenario';
@@ -48,6 +48,7 @@ export default function App() {
   // "Play without GPS" is remembered for this app session only.
   const [withoutGps, setWithoutGps] = useState(false);
   const loaded = useRef(false);
+  const seeded = useRef(false);
 
   useEffect(() => {
     let alive = true;
@@ -63,7 +64,7 @@ export default function App() {
       if (alive) {
         setLanguageSetting(storedLanguage);
         setFeedback(storedFeedback);
-        setProgress(storedProgress);
+        if (!seeded.current) setProgress(storedProgress);
         setConsentState(storedConsent);
         loaded.current = true;
       }
@@ -71,6 +72,24 @@ export default function App() {
     return () => {
       alive = false;
     };
+  }, []);
+
+  // Testing deep link (PRD): opens the game at a given screen.
+  useEffect(() => {
+    const open = (url: string | null) => {
+      const seed = seedProgress(SCENARIOS.fr, parseSeedUrl(url) ?? -1);
+      if (!seed) return;
+      seeded.current = true;
+      loaded.current = true;
+      setWithoutGps(true);
+      setProgress(seed);
+      setRoute('game');
+    };
+    Linking.getInitialURL()
+      .then(open)
+      .catch(() => undefined);
+    const sub = Linking.addEventListener('url', ({ url }) => open(url));
+    return () => sub?.remove();
   }, []);
 
   const decide = useCallback(async (granted: boolean) => {
@@ -86,13 +105,16 @@ export default function App() {
     await saveLanguageSetting(value);
   }, []);
 
-  const changeFeedback = useCallback(async (value: FeedbackSettings) => {
-    if (feedback.sound !== value.sound) track('settings_change', { setting: 'sound', value: value.sound ? 'on' : 'off' });
-    if (feedback.haptics !== value.haptics) track('settings_change', { setting: 'haptics', value: value.haptics ? 'on' : 'off' });
-    setFeedback(value);
-    configureFeedback(value);
-    await saveFeedbackSettings(value);
-  }, [feedback]);
+  const changeFeedback = useCallback(
+    async (value: FeedbackSettings) => {
+      if (feedback.sound !== value.sound) track('settings_change', { setting: 'sound', value: value.sound ? 'on' : 'off' });
+      if (feedback.haptics !== value.haptics) track('settings_change', { setting: 'haptics', value: value.haptics ? 'on' : 'off' });
+      setFeedback(value);
+      configureFeedback(value);
+      await saveFeedbackSettings(value);
+    },
+    [feedback],
+  );
 
   // Progress is saved after every change (not before the stored one is loaded).
   useEffect(() => {

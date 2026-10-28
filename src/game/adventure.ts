@@ -101,3 +101,26 @@ export function rate(progress: Progress, stars: number): Progress {
   if (progress.rating !== null || !Number.isInteger(stars) || stars < 1 || stars > 5) return progress;
   return { ...progress, rating: stars };
 }
+
+// Testing deep link (PRD): the progress of a player who reached `screen` answering every earlier riddle at the
+// first try (used by Maestro to reach the final puzzle and the end screen).
+export function seedProgress(scenario: Scenario, screen: number): Progress | null {
+  if (!Number.isInteger(screen) || screen < 0 || screen >= scenario.screens.length) return null;
+  const before = (predicate: (i: number) => boolean) => scenario.screens.flatMap((_, i) => (i < screen && predicate(i) ? [i] : []));
+  const solved = before((i) => isQuiz(scenario.screens[i]));
+  const puzzleDone = scenario.screens.some((s, i) => i < screen && s.type === 'final_puzzle');
+  return {
+    ...initialProgress,
+    current: screen,
+    furthest: screen,
+    score: solved.length,
+    solved,
+    reached: before((i) => isRadar(scenario.screens[i])),
+    puzzle: puzzleDone ? { lines: initialPuzzle.lines.map((line) => ({ ...line, solved: true })) } : initialPuzzle,
+  };
+}
+
+export function parseSeedUrl(url: string | null): number | null {
+  const match = url?.match(/^mysteresbruguieres:\/\/seed\/(\d+)$/);
+  return match ? Number(match[1]) : null;
+}

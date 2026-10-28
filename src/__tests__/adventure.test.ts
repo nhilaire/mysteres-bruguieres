@@ -8,8 +8,10 @@ import {
   initialProgress,
   isStarted,
   next,
+  parseSeedUrl,
   Progress,
   rate,
+  seedProgress,
 } from '../game/adventure';
 import { SCENARIOS } from '../i18n/scenario';
 
@@ -128,5 +130,29 @@ describe('rating', () => {
     expect(rate(at(33), 0).rating).toBeNull();
     expect(rate(at(33), 6).rating).toBeNull();
     expect(rate(at(33), 2.5).rating).toBeNull();
+  });
+});
+
+describe('testing deep link', () => {
+  it('seeds a player who answered every earlier riddle at the first try', () => {
+    const seeded = seedProgress(scenario, 31)!;
+    expect(seeded).toMatchObject({ current: 31, furthest: 31, score: 9, rating: null });
+    expect(seeded.solved).toHaveLength(9);
+    expect(seeded.reached).toHaveLength(9);
+    expect(seeded.puzzle.lines.every((l) => !l.solved)).toBe(true);
+    expect(seedProgress(scenario, 33)!.puzzle.lines.every((l) => l.solved)).toBe(true);
+    expect(seedProgress(scenario, 0)).toEqual(initialProgress);
+  });
+
+  it('rejects screens outside the scenario', () => {
+    expect(seedProgress(scenario, 34)).toBeNull();
+    expect(seedProgress(scenario, -1)).toBeNull();
+  });
+
+  it('reads mysteresbruguieres://seed/<screen> only', () => {
+    expect(parseSeedUrl('mysteresbruguieres://seed/31')).toBe(31);
+    expect(parseSeedUrl('mysteresbruguieres://seed/x')).toBeNull();
+    expect(parseSeedUrl('https://example.org/seed/31')).toBeNull();
+    expect(parseSeedUrl(null)).toBeNull();
   });
 });

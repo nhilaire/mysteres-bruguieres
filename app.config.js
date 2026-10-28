@@ -36,6 +36,8 @@ module.exports = ({ config }) => ({
   slug: meta.slug,
   version,
   orientation: config.orientation || 'portrait',
+  // Testing deep link (PRD): mysteresbruguieres://seed/<screen>.
+  scheme: 'mysteresbruguieres',
   android: {
     ...config.android,
     package: meta.package,
@@ -48,6 +50,11 @@ module.exports = ({ config }) => ({
       'android.permission.ACCESS_ADSERVICES_ATTRIBUTION',
       'android.permission.ACCESS_ADSERVICES_TOPICS',
       'com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE',
+      // Injected by expo-sensors (step counter) and expo-audio (recording): the game only reads the compass and
+      // plays sounds. Background location is never requested.
+      'android.permission.ACTIVITY_RECOGNITION',
+      'android.permission.RECORD_AUDIO',
+      'android.permission.ACCESS_BACKGROUND_LOCATION',
       // Expo template defaults that a small offline game does not need.
       'android.permission.SYSTEM_ALERT_WINDOW',
       'android.permission.READ_EXTERNAL_STORAGE',
@@ -58,6 +65,14 @@ module.exports = ({ config }) => ({
   plugins: [
     ...(config.plugins || []).filter((p) => !FIREBASE_PLUGINS.includes(pluginName(p))),
     ...(hasFirebase ? FIREBASE_PLUGINS : []),
+    [
+      'expo-location',
+      {
+        locationWhenInUsePermission: "L'application a besoin de votre position pour vous guider vers les lieux du jeu.",
+        isAndroidBackgroundLocationEnabled: false,
+        isAndroidForegroundServiceEnabled: false,
+      },
+    ],
     './plugins/with-release-signing',
   ],
   extra: { ...config.extra, firebaseEnabled: hasFirebase },
