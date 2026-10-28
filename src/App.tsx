@@ -5,33 +5,29 @@ import { LanguageSetting } from './i18n';
 import { I18nProvider } from './i18n/I18nProvider';
 import { AboutScreen } from './screens/AboutScreen';
 import { ConsentScreen } from './screens/ConsentScreen';
-import { GameScreen } from './screens/GameScreen';
 import { HomeScreen } from './screens/HomeScreen';
 import { SettingsScreen } from './screens/SettingsScreen';
-import { loadBestScore, saveBestScore } from './storage/bestScore';
 import { loadLanguageSetting, saveLanguageSetting } from './storage/languageSetting';
 import { Consent, loadConsent, saveConsent } from './telemetry/consentStore';
 import { applyConsent } from './telemetry/telemetry';
 import { ErrorBoundary } from './ui/ErrorBoundary';
 import { colors } from './ui/theme';
 
-type Route = 'home' | 'game' | 'settings' | 'about';
+type Route = 'home' | 'settings' | 'about';
 
 export default function App() {
   const [consent, setConsentState] = useState<Consent | 'loading'>('loading');
   const [route, setRoute] = useState<Route>('home');
-  const [bestScore, setBestScore] = useState(0);
   const [languageSetting, setLanguageSetting] = useState<LanguageSetting>('auto');
 
   useEffect(() => {
     let alive = true;
     (async () => {
-      const [storedConsent, storedBest, storedLanguage] = await Promise.all([loadConsent(), loadBestScore(), loadLanguageSetting()]);
+      const [storedConsent, storedLanguage] = await Promise.all([loadConsent(), loadLanguageSetting()]);
       if (storedConsent !== 'unknown') await applyConsent(storedConsent === 'granted');
       if (alive) {
         setLanguageSetting(storedLanguage);
         setConsentState(storedConsent);
-        setBestScore(storedBest);
       }
     })();
     return () => {
@@ -51,11 +47,6 @@ export default function App() {
     await saveLanguageSetting(value);
   }, []);
 
-  const onGameOver = useCallback(async (score: number) => {
-    setBestScore((current) => Math.max(current, score));
-    await saveBestScore(score);
-  }, []);
-
   let content: React.ReactNode;
   if (consent === 'loading') {
     content = (
@@ -65,14 +56,12 @@ export default function App() {
     );
   } else if (consent === 'unknown') {
     content = <ConsentScreen onDecision={decide} />;
-  } else if (route === 'game') {
-    content = <GameScreen onExit={() => setRoute('home')} onGameOver={onGameOver} />;
   } else if (route === 'about') {
     content = <AboutScreen onBack={() => setRoute('home')} />;
   } else if (route === 'settings') {
     content = <SettingsScreen telemetryEnabled={consent === 'granted'} onToggleTelemetry={decide} onBack={() => setRoute('home')} />;
   } else {
-    content = <HomeScreen bestScore={bestScore} onPlay={() => setRoute('game')} onSettings={() => setRoute('settings')} onAbout={() => setRoute('about')} />;
+    content = <HomeScreen onPlay={() => setRoute('home')} onSettings={() => setRoute('settings')} onAbout={() => setRoute('about')} />;
   }
 
   return (

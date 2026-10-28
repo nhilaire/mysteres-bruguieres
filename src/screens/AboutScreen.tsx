@@ -41,6 +41,7 @@ export function AboutScreen({ onBack }: { onBack: () => void }) {
       <ScrollView contentContainerStyle={styles.body}>
         <Text style={styles.name}>{appName(language)}</Text>
         <Section title={t.about.storyTitle} paragraphs={t.about.story} />
+        <Text style={styles.paragraph}>{t.about.developer}</Text>
         <Section title={t.about.authorTitle} paragraphs={t.about.author} />
         <Section title={t.about.dataTitle} paragraphs={t.about.data} />
         <Text style={styles.version}>{t.about.version(APP_VERSION)}</Text>

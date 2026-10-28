@@ -3,6 +3,8 @@
 // en: comma as thousands separator, no space before ":".
 // Escaped, not a literal character: a copy or an editor can silently turn a literal no-break space into a plain one.
 export const NBSP = '\u00a0';
+// Narrow no-break space, before ; ! ? in French.
+export const NNBSP = '\u202f';
 
 export type Formatter = {
   integer(value: number): string;

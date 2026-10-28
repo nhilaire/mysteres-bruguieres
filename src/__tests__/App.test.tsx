@@ -15,16 +15,16 @@ describe('App', () => {
 
   it('asks for consent in French on a French phone, then shows the home screen', async () => {
     await render(<App />);
-    expect(await screen.findByText('Votre vie privée')).toBeTruthy();
-    await fireEvent.press(screen.getByText('Refuser'));
-    expect(await screen.findByText('Jouer')).toBeTruthy();
+    expect(await screen.findByText('Tes données, ton choix')).toBeTruthy();
+    await fireEvent.press(screen.getByText('Je refuse'));
+    expect(await screen.findByText("Commencer l'aventure")).toBeTruthy();
     expect(screen.getByText(appName('fr'))).toBeTruthy();
   });
 
   it('speaks English on an English phone', async () => {
     jest.mocked(deviceLanguageTags).mockReturnValue(['en-US']);
     await render(<App />);
-    expect(await screen.findByText('Your privacy')).toBeTruthy();
+    expect(await screen.findByText('Your data, your choice')).toBeTruthy();
   });
 
   it('uses the fallback language on a phone in an unsupported language', async () => {
@@ -32,20 +32,20 @@ describe('App', () => {
     await AsyncStorage.setItem('telemetry.consent.v1', 'denied');
     await render(<App />);
     expect(await screen.findByTestId('home-screen')).toBeTruthy();
-    expect(screen.getByText('Play')).toBeTruthy();
+    expect(screen.getByText('Start the adventure')).toBeTruthy();
   });
 
   it('switches language from the settings at once and remembers the choice', async () => {
     await AsyncStorage.setItem('telemetry.consent.v1', 'denied');
     await render(<App />);
-    await fireEvent.press(await screen.findByText('Paramètres'));
+    await fireEvent.press(await screen.findByText('Réglages'));
     await fireEvent.press(screen.getByTestId('settings-language-en'));
     expect(await screen.findByText('Settings')).toBeTruthy();
     expect(await AsyncStorage.getItem('settings.language.v1')).toBe('en');
 
     await screen.unmount();
     await render(<App />);
-    expect(await screen.findByText('Play')).toBeTruthy();
+    expect(await screen.findByText('Start the adventure')).toBeTruthy();
   });
 
   it('goes back to the phone language with the automatic choice', async () => {
@@ -56,13 +56,13 @@ describe('App', () => {
     await render(<App />);
     await fireEvent.press(await screen.findByText('Settings'));
     await fireEvent.press(screen.getByTestId('settings-language-auto'));
-    expect(await screen.findByText('Paramètres')).toBeTruthy();
+    expect(await screen.findByText('Réglages')).toBeTruthy();
   });
 
   it('shows the About screen: story, word from the author, data, version', async () => {
     await AsyncStorage.setItem('telemetry.consent.v1', 'denied');
     await render(<App />);
-    await fireEvent.press(await screen.findByText('À propos'));
+    await fireEvent.press(await screen.findByText('À propos du jeu'));
     expect(screen.getByTestId('about-screen')).toBeTruthy();
     expect(screen.getByText("L'histoire de ce jeu")).toBeTruthy();
     expect(screen.getByText(/développeur passionné/)).toBeTruthy();
@@ -73,7 +73,7 @@ describe('App', () => {
   it('does not ask again once the player has chosen', async () => {
     await AsyncStorage.setItem('telemetry.consent.v1', 'denied');
     await render(<App />);
-    expect(await screen.findByText('Jouer')).toBeTruthy();
-    expect(screen.queryByText('Votre vie privée')).toBeNull();
+    expect(await screen.findByText("Commencer l'aventure")).toBeTruthy();
+    expect(screen.queryByText('Tes données, ton choix')).toBeNull();
   });
 });

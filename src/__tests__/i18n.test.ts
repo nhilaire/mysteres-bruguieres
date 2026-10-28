@@ -1,6 +1,7 @@
 import meta from '../../factory-app.json';
 import { DICTIONARIES, FALLBACK_LANGUAGE, LANGUAGE_NAMES, LANGUAGES, resolveLanguage } from '../i18n';
 import { formatter } from '../i18n/format';
+import { frenchTypographyErrors } from './helpers/typography';
 
 // Shape of a dictionary: every key, function arity and list length (texts differ, structure must not).
 function shape(value: unknown): unknown {
@@ -37,6 +38,16 @@ describe('languages', () => {
 
   it.each(LANGUAGES)('%s has no empty text', (language) => {
     expect(texts(DICTIONARIES[language]).filter((s) => s.trim() === '')).toEqual([]);
+  });
+});
+
+describe('French typography', () => {
+  it('has no ordinary space before : ; ! ? nor inside guillemets in any French string', () => {
+    expect(texts(DICTIONARIES.fr).flatMap(frenchTypographyErrors)).toEqual([]);
+  });
+
+  it('leaves English free of French no-break spaces', () => {
+    expect(texts(DICTIONARIES.en).filter((s) => /[  «»]/.test(s))).toEqual([]);
   });
 });
 

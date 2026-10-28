@@ -12,7 +12,7 @@ Format: `- [ ] T-01 Title (AC-01, AC-02) - proof: unit|e2e|device`. Check the bo
 - [x] T-05 Adventure engine: navigation (back/forward/skip passed radars), riddle attempts and first-try scoring, places reached, rating once, restart (AC-16, AC-21) - proof: unit
 - [x] T-06 Final puzzle engine: operations from the scenario answers, keypad input, wrong counts, "Show me" after 3, solved state (AC-18, AC-19) - proof: unit
 - [x] T-07 Persistence: progress (incl. puzzle state, rating) and settings (sounds, vibrations), versioned keys, restart keeps settings (AC-22, AC-25) - proof: unit
-- [ ] T-08 Dictionaries fr/en from the PRD player copy, French typography test on every French string (AC-02, AC-32) - proof: unit
+- [x] T-08 Dictionaries fr/en from the PRD player copy, French typography test on every French string (AC-02, AC-32) - proof: unit
 - [ ] T-09 Assets: Auguste sprite sheets, title image, reaction portraits cropped from board h9oqowh9, church bells, generated sound effects with WAV header test, launcher icon, LICENSES.md (AC-34) - proof: unit
 - [ ] T-10 Sound and haptics service gated by the settings, bells on the church narration screen (AC-25, AC-34) - proof: unit
 - [ ] T-11 Location permission states and explainer screen (6 states, AppState re-check, "Play without GPS") (AC-07, AC-08) - proof: unit
