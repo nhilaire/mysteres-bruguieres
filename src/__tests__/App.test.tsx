@@ -68,6 +68,10 @@ describe('App', () => {
     expect(screen.getByText(/développeur indépendant passionné/)).toBeTruthy();
     expect(screen.getByText(/bugs/)).toBeTruthy();
     expect(screen.getByText(/^Version [0-9]+[.][0-9]+[.][0-9]+$/)).toBeTruthy();
+    expect(screen.getByText(/traînant d'un monument à l'autre/)).toBeTruthy();
+    expect(screen.getByText('Comment ça marche')).toBeTruthy();
+    expect(screen.getByText(/Compte environ 2 heures/)).toBeTruthy();
+    expect(screen.getByText(/Ta position ne quitte jamais ton téléphone/)).toBeTruthy();
   });
 
   it('does not ask again once the player has chosen', async () => {

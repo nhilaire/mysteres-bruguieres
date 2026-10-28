@@ -5,7 +5,7 @@ import { appName, APP_VERSION } from '../config/app';
 import { useI18n } from '../i18n/I18nProvider';
 import { Button } from '../ui/Button';
 import { Screen } from '../ui/Screen';
-import { colors, font, spacing } from '../ui/theme';
+import { colors, font, spacing, workshop } from '../ui/theme';
 
 // « À propos »: why this game exists (story from the discovery brief), a word from the author (a passionate
 // developer, free time, bugs are possible), the player's data, the version.
@@ -41,7 +41,28 @@ export function AboutScreen({ onBack }: { onBack: () => void }) {
       <ScrollView contentContainerStyle={styles.body}>
         <Text style={styles.name}>{appName(language)}</Text>
         <Section title={t.about.storyTitle} paragraphs={t.about.story} />
-        <Text style={styles.paragraph}>{t.about.developer}</Text>
+        <Text style={styles.developer} testID="about-developer">
+          {t.about.developer}
+        </Text>
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>{t.about.howToTitle}</Text>
+          {t.about.howTo.map((item, i) => (
+            <View key={item.title} style={styles.card}>
+              <Text style={styles.cardTitle}>
+                {['❶', '❷', '❸', '❹'][i]} {item.title}
+              </Text>
+              <Text style={styles.paragraph}>{item.body}</Text>
+            </View>
+          ))}
+        </View>
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>{t.about.practicalTitle}</Text>
+          {t.about.practical.map((line) => (
+            <Text key={line} style={styles.bullet}>
+              • {line}
+            </Text>
+          ))}
+        </View>
         <Section title={t.about.authorTitle} paragraphs={t.about.author} />
         <Section title={t.about.dataTitle} paragraphs={t.about.data} />
         <Text style={styles.version}>{t.about.version(APP_VERSION)}</Text>
@@ -58,5 +79,9 @@ const styles = StyleSheet.create({
   section: { gap: spacing.sm },
   sectionTitle: { color: colors.accent, fontSize: font.small, fontWeight: '800', letterSpacing: 1.5, textTransform: 'uppercase' },
   paragraph: { color: colors.text, fontSize: font.body, lineHeight: 25 },
+  developer: { color: colors.muted, fontSize: font.body, fontStyle: 'italic' },
+  card: { backgroundColor: colors.surface, borderRadius: 12, padding: spacing.md, gap: spacing.xs, borderWidth: 1, borderColor: workshop.ink700 },
+  cardTitle: { color: workshop.goldBright, fontSize: font.body, fontWeight: '800' },
+  bullet: { color: colors.text, fontSize: font.body - 1, lineHeight: 23 },
   version: { color: colors.muted, fontSize: font.small, textAlign: 'center' },
 });
