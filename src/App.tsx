@@ -17,11 +17,14 @@ import { defaultFeedbackSettings, FeedbackSettings, loadFeedbackSettings, saveFe
 import { loadLanguageSetting, saveLanguageSetting } from './storage/languageSetting';
 import { clearProgress, loadProgress, saveProgress } from './storage/progress';
 import { Consent, loadConsent, saveConsent } from './telemetry/consentStore';
-import { applyConsent } from './telemetry/telemetry';
+import { gameEvents } from './telemetry/gameEvents';
+import { applyConsent, track } from './telemetry/telemetry';
 import { ErrorBoundary } from './ui/ErrorBoundary';
 import { colors } from './ui/theme';
 
 type Route = 'title' | 'location' | 'game' | 'settings' | 'about';
+
+const GAME_EVENTS = gameEvents(track);
 
 // Every language has the same screens; the French scenario gives the count.
 const SCREEN_COUNT = SCENARIOS.fr.screens.length;
@@ -78,15 +81,18 @@ export default function App() {
   }, []);
 
   const changeLanguage = useCallback(async (value: LanguageSetting) => {
+    track('settings_change', { setting: 'language', value });
     setLanguageSetting(value);
     await saveLanguageSetting(value);
   }, []);
 
   const changeFeedback = useCallback(async (value: FeedbackSettings) => {
+    if (feedback.sound !== value.sound) track('settings_change', { setting: 'sound', value: value.sound ? 'on' : 'off' });
+    if (feedback.haptics !== value.haptics) track('settings_change', { setting: 'haptics', value: value.haptics ? 'on' : 'off' });
     setFeedback(value);
     configureFeedback(value);
     await saveFeedbackSettings(value);
-  }, []);
+  }, [feedback]);
 
   // Progress is saved after every change (not before the stored one is loaded).
   useEffect(() => {
@@ -96,9 +102,10 @@ export default function App() {
   const updateProgress = useCallback((update: (p: Progress) => Progress) => setProgress(update), []);
 
   const start = useCallback(async () => {
+    track('adventure_start', { resumed: isStarted(progress), step: progress.reached.length });
     if (withoutGps || (await checkLocationPermission()) === 'granted') setRoute('game');
     else setRoute('location');
-  }, [withoutGps]);
+  }, [withoutGps, progress]);
 
   const restart = useCallback(async () => {
     await clearProgress();
@@ -140,7 +147,7 @@ export default function App() {
       />
     );
   } else if (route === 'game') {
-    content = <GameScreen progress={progress} onProgress={updateProgress} onMenu={toTitle} onRestart={restart} />;
+    content = <GameScreen progress={progress} onProgress={updateProgress} onMenu={toTitle} onRestart={restart} events={GAME_EVENTS} />;
   } else {
     content = (
       <TitleScreen
