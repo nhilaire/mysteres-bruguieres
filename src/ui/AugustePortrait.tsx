@@ -47,7 +47,7 @@ export function AugustePortrait({ width, pose = 0, reaction, talking = false, br
       breath.value = 1;
     };
   }, [breath, breathing]);
-  const breathing = useAnimatedStyle(() => ({ transform: [{ scale: breath.value }] }));
+  const breathStyle = useAnimatedStyle(() => ({ transform: [{ scale: breath.value }] }));
 
   const mouth = talking ? MOUTH_SEQUENCE[step % MOUTH_SEQUENCE.length] : 0;
   const rect = MOUTH_RECTS[mouth];
@@ -62,7 +62,7 @@ export function AugustePortrait({ width, pose = 0, reaction, talking = false, br
       accessibilityLabel={t.game.portrait}
       testID={reaction ? `auguste-reaction-${reaction}` : 'auguste-portrait'}
     >
-      <Animated.View style={[StyleSheet.absoluteFill, breathing]}>
+      <Animated.View style={[StyleSheet.absoluteFill, breathStyle]}>
         {AUGUSTE_SHEETS.map((source, i) => (
           <Image
             key={i}
