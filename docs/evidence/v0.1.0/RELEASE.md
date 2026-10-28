@@ -15,3 +15,5 @@ Launch check: alive after 10 s, no fatal error
 - 2026-10-28, build 898f05f: the Android navigation bar (bottom bar) gets in the way -> hide it during the game.
   PRD AC-36 + plan T-24, implemented in 463d6a4 (config plugin on MainActivity, status bar kept).
 - 2026-10-28: APK arm64 is 41.3 MB, above the PRD target (< 40 MB): the user accepted it, PRD target amended to < 45 MB.
+- Next version: game.test.tsx "continues on the same screen with the same score" does not assert the score (the
+  storage test proves it); seed the resume flow with a score above 0 and assert it (verifier gap, 573b33d).

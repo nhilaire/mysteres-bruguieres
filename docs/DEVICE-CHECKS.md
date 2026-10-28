@@ -9,6 +9,7 @@ phone during `/release-apk`. Each check names the command or observation that pr
 | AC-29 | Cold start < 3 s, no crash or ANR during the Maestro flows | `verify.mjs` cold start line and logcat crash buffer |
 | AC-30 | Dangerous permissions limited to foreground location | `aapt dump permissions <apk>`: only `ACCESS_FINE_LOCATION` / `ACCESS_COARSE_LOCATION` among dangerous ones; no `AD_ID`, `RECORD_AUDIO`, `ACTIVITY_RECOGNITION`, `ACCESS_BACKGROUND_LOCATION` |
 | AC-34 | Sounds play on the device | `SOUND_LOADED <name>` lines in logcat (`adb logcat -s ReactNativeJS`): ping, chime, right, wrong, tick, bells; the user hears the bells on the church narration screen |
+| AC-36 | Android navigation bar hidden, status bar kept | `adb shell dumpsys window`: `type=navigationBars visible=false`, `type=statusBars visible=true`; on the phone: no bottom bar, a swipe from the bottom shows it briefly, hidden again after the maps app |
 | AC-31 | On site in Bruguières, at least one step | The user walks to one place: the radar leads there, the pulse and ticks speed up under 50 m, arrival triggers by itself; the radar feels livelier than the source game |
 | AC-35 | Feel | Screen transitions, Auguste breathing and his reactions (right, wrong, GAMOUNA, end) feel livelier than the source game |
 
