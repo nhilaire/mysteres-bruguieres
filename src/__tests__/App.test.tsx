@@ -31,7 +31,7 @@ describe('App', () => {
     jest.mocked(deviceLanguageTags).mockReturnValue(['it-IT']);
     await AsyncStorage.setItem('telemetry.consent.v1', 'denied');
     await render(<App />);
-    expect(await screen.findByTestId('home-screen')).toBeTruthy();
+    expect(await screen.findByTestId('title-screen')).toBeTruthy();
     expect(screen.getByText('Start the adventure')).toBeTruthy();
   });
 
