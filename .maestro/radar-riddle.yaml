@@ -58,6 +58,15 @@ tags:
     timeout: 5000
 - tapOn:
     id: "quiz-choice-1"
+- assertVisible:
+    id: "quiz-right"
+- assertVisible:
+    id: "auguste-reaction-amazed"
+- assertVisible:
+    id: "quiz-no-point"
+- takeScreenshot: 07-riddle-right
+- tapOn:
+    id: "quiz-continue"
 - extendedWaitUntil:
     visible:
       id: "game-step-5"

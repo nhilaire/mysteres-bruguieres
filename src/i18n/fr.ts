@@ -110,6 +110,9 @@ export const fr = {
     answer: (choice: string) => label('Réponse', choice),
     right: `Bravo${NNBSP}!`,
     wrong: `Raté… essaie encore${NNBSP}!`,
+    point: `+1${NBSP}point${NBSP}: trouvé du premier coup${NNBSP}!`,
+    noPoint: `Pas de point cette fois${NBSP}: il fallait trouver du premier coup.`,
+    continue: 'Continuer',
   },
   puzzle: {
     title: 'Le dernier mécanisme',

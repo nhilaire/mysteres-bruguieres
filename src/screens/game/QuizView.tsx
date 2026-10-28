@@ -7,9 +7,9 @@ import type { AnswerResult } from '../../game/adventure';
 import { questionLines, QuizScreen } from '../../game/scenario';
 import { useI18n } from '../../i18n/I18nProvider';
 import { AugustePortrait } from '../../ui/AugustePortrait';
+import { Button } from '../../ui/Button';
 import { daylight, font, spacing } from '../../ui/theme';
 
-export const RIGHT_DELAY_MS = 800;
 export const WRONG_MS = 1500;
 
 type Props = {
@@ -27,26 +27,28 @@ export function QuizView({ quiz, solved, onAnswer, onNext }: Props) {
   const [feedback, setFeedback] = useState<Feedback>(null);
   // The verdict (and Auguste's reaction) stays until the next answer; the red button only for WRONG_MS.
   const [verdict, setVerdict] = useState<'right' | 'wrong' | null>(null);
+  // A wrong answer before the right one: the right answer then scores no point.
+  const [missed, setMissed] = useState(false);
 
+  // The red state lasts WRONG_MS; a right answer stays on screen until the player taps Continue.
   useEffect(() => {
-    if (!feedback) return;
-    const id =
-      feedback.result === 'right' ? setTimeout(onNext, RIGHT_DELAY_MS) : setTimeout(() => setFeedback(null), WRONG_MS);
+    if (feedback?.result !== 'wrong') return;
+    const id = setTimeout(() => setFeedback(null), WRONG_MS);
     return () => clearTimeout(id);
-  }, [feedback, onNext]);
+  }, [feedback]);
 
   const choose = (choice: string) => {
-    if (feedback) return;
+    if (feedback || verdict === 'right') return;
     const result = onAnswer(choice);
     if (result === 'ignored') return;
     setFeedback({ choice, result });
     setVerdict(result);
+    if (result === 'wrong') setMissed(true);
     playSound(result);
     vibrate(result);
   };
 
-  const reaction: Reaction | undefined =
-    verdict === 'right' || solved ? 'amazed' : verdict === 'wrong' ? 'worried' : undefined;
+  const reaction: Reaction | undefined = verdict === 'right' || solved ? 'amazed' : verdict === 'wrong' ? 'worried' : undefined;
   const portraitWidth = Math.min(width * 0.36, height * 0.18, 170);
 
   return (
@@ -84,7 +86,10 @@ export function QuizView({ quiz, solved, onAnswer, onNext }: Props) {
               onPress={() => choose(choice)}
               style={({ pressed }) => [styles.choice, pressed && styles.pressed, isRight && styles.right, isWrong && styles.wrong]}
             >
-              <Text style={[styles.choiceText, isRight && styles.rightText, isWrong && styles.wrongText]} testID={isWrong ? 'quiz-red' : undefined}>
+              <Text
+                style={[styles.choiceText, isRight && styles.rightText, isWrong && styles.wrongText]}
+                testID={isWrong ? 'quiz-red' : undefined}
+              >
                 {choice}
               </Text>
             </Pressable>
@@ -92,6 +97,12 @@ export function QuizView({ quiz, solved, onAnswer, onNext }: Props) {
         })}
       </View>
       {!solved && !verdict && <Text style={styles.waiting}>{t.quiz.waiting}</Text>}
+      {verdict === 'right' && (
+        <Text style={styles.point} testID={missed ? 'quiz-no-point' : 'quiz-point'}>
+          {missed ? t.quiz.noPoint : t.quiz.point}
+        </Text>
+      )}
+      {(solved || verdict === 'right') && <Button label={t.quiz.continue} onPress={onNext} testID="quiz-continue" />}
     </ScrollView>
   );
 }
@@ -122,5 +133,6 @@ const styles = StyleSheet.create({
   choiceText: { color: daylight.text, fontSize: font.heading - 2, fontWeight: '800' },
   rightText: { color: daylight.success },
   wrongText: { color: daylight.error },
+  point: { color: daylight.text, fontSize: font.body, fontWeight: '700', textAlign: 'center' },
   waiting: { color: daylight.muted, fontSize: font.small, textAlign: 'center', fontStyle: 'italic' },
 });

@@ -2,7 +2,7 @@ import { act, fireEvent, render, screen } from '@testing-library/react-native';
 
 import { playSound, vibrate } from '../feedback/feedback';
 import type { QuizScreen } from '../game/scenario';
-import { QuizView, RIGHT_DELAY_MS, WRONG_MS } from '../screens/game/QuizView';
+import { QuizView, WRONG_MS } from '../screens/game/QuizView';
 
 jest.mock('../feedback/feedback', () => ({ playSound: jest.fn(), stopSound: jest.fn(), vibrate: jest.fn() }));
 
@@ -31,17 +31,27 @@ it('a wrong answer turns red with the head-scratching portrait, then allows a re
   expect(screen.getByTestId('quiz-right')).toBeTruthy();
 });
 
-it('the right answer turns green with the happy portrait and moves on after 800 ms', async () => {
+it('the right answer turns green with the happy portrait and stays until Continue', async () => {
   const onNext = jest.fn();
   await render(<QuizView quiz={quiz} solved={false} onAnswer={judge} onNext={onNext} />);
   await fireEvent.press(screen.getByTestId('quiz-choice-1'));
   expect(screen.getByTestId('quiz-right')).toBeTruthy();
   expect(screen.getByTestId('auguste-reaction-amazed')).toBeTruthy();
   expect(playSound).toHaveBeenCalledWith('right');
-  await act(async () => jest.advanceTimersByTime(RIGHT_DELAY_MS - 1));
+  expect(screen.getByText('+1\u00a0point\u00a0: trouvé du premier coup\u202f!')).toBeTruthy();
+  await act(async () => jest.advanceTimersByTime(10000));
   expect(onNext).not.toHaveBeenCalled();
-  await act(async () => jest.advanceTimersByTime(1));
+  await fireEvent.press(screen.getByTestId('quiz-continue'));
   expect(onNext).toHaveBeenCalledTimes(1);
+});
+
+it('says there is no point when the right answer came after a wrong one', async () => {
+  await render(<QuizView quiz={quiz} solved={false} onAnswer={judge} onNext={jest.fn()} />);
+  await fireEvent.press(screen.getByTestId('quiz-choice-0'));
+  await act(async () => jest.advanceTimersByTime(WRONG_MS));
+  await fireEvent.press(screen.getByTestId('quiz-choice-1'));
+  expect(screen.getByTestId('quiz-no-point')).toBeTruthy();
+  expect(screen.queryByText(/\+1/)).toBeNull();
 });
 
 it('a solved riddle is read-only', async () => {
@@ -50,4 +60,5 @@ it('a solved riddle is read-only', async () => {
   await fireEvent.press(screen.getByTestId('quiz-choice-0'));
   expect(onAnswer).not.toHaveBeenCalled();
   expect(screen.getByTestId('quiz-choice-1').props.accessibilityState).toMatchObject({ disabled: true, selected: true });
+  expect(screen.getByTestId('quiz-continue')).toBeTruthy();
 });

@@ -114,6 +114,9 @@ export const en: Strings = {
     answer: (choice: string) => label('Answer', choice),
     right: 'Well done!',
     wrong: 'Not this one… try again!',
+    point: '+1 point: solved at the first try!',
+    noPoint: 'No point this time: it takes the first try.',
+    continue: 'Continue',
   },
   puzzle: {
     title: 'The last mechanism',
