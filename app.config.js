@@ -73,6 +73,7 @@ module.exports = ({ config }) => ({
         isAndroidForegroundServiceEnabled: false,
       },
     ],
+    './plugins/with-hidden-navigation-bar',
     './plugins/with-release-signing',
   ],
   extra: { ...config.extra, firebaseEnabled: hasFirebase },
