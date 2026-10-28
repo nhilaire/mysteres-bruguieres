@@ -72,3 +72,13 @@ describe('settings screen', () => {
     expect(onToggleTelemetry).toHaveBeenCalledWith(false);
   });
 });
+
+describe('consent screen', () => {
+  it('gives Accept and Refuse exactly the same weight (CNIL: refusing is as easy as accepting)', async () => {
+    const { ConsentScreen } = require('../screens/ConsentScreen');
+    const { StyleSheet } = require('react-native');
+    await render(<ConsentScreen onDecision={jest.fn()} />);
+    const style = (id: string) => StyleSheet.flatten(screen.getByTestId(id).props.style);
+    expect(style('consent-accept')).toEqual(style('consent-refuse'));
+  });
+});

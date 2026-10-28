@@ -17,7 +17,8 @@ export function ConsentScreen({ onDecision }: { onDecision: (granted: boolean) =
         <Text style={styles.body}>{t.consent.body}</Text>
         <Text style={styles.footnote}>{t.consent.footnote}</Text>
       </View>
-      <Button label={t.consent.accept} onPress={() => onDecision(true)} testID="consent-accept" />
+      {/* Same variant for both: refusing must be exactly as easy and as visible as accepting. */}
+      <Button label={t.consent.accept} onPress={() => onDecision(true)} variant="secondary" testID="consent-accept" />
       <Button label={t.consent.refuse} onPress={() => onDecision(false)} variant="secondary" testID="consent-refuse" />
     </Screen>
   );

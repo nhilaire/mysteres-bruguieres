@@ -93,3 +93,30 @@ describe('resuming the adventure', () => {
     expect(await screen.findByTestId('game-screen')).toBeTruthy();
   });
 });
+
+describe('final puzzle and score', () => {
+  it('solving the final puzzle, even with "Show me", leaves the score unchanged', async () => {
+    const { seedProgress } = require('../game/adventure');
+    const { SCENARIOS } = require('../i18n/scenario');
+    const start: Progress = { ...seedProgress(SCENARIOS.fr, 31), score: 6 };
+    let latest = start;
+    function Tracked() {
+      const [progress, setProgress] = useState(start);
+      latest = progress;
+      return <GameScreen progress={progress} onProgress={(u) => setProgress(u)} onMenu={jest.fn()} onRestart={jest.fn()} />;
+    }
+    await render(<Tracked />);
+    for (let i = 0; i < 3; i++) {
+      await fireEvent.press(screen.getByTestId('keypad-9'));
+      await fireEvent.press(screen.getByTestId('keypad-validate'));
+    }
+    await fireEvent.press(screen.getByTestId('puzzle-reveal'));
+    for (const value of [1, 13, 15, 21, 14, 1]) {
+      for (const d of String(value)) await fireEvent.press(screen.getByTestId(`keypad-${d}`));
+      await fireEvent.press(screen.getByTestId('keypad-validate'));
+    }
+    expect(screen.getByTestId('puzzle-solved')).toBeTruthy();
+    expect(latest.puzzle.lines.every((l) => l.solved)).toBe(true);
+    expect(latest.score).toBe(6);
+  });
+});
