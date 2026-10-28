@@ -246,6 +246,9 @@ identifiers, no position, no free text.
   bundle).
 - Works fully offline: texts, images and sounds are bundled; only GPS is needed.
 - Battery: GPS and compass only on radar screens.
+- Testing deep link `mysteresbruguieres://seed/<screen>` (approved 2026-10-28): opens the game at a scenario screen with
+  the progress of a player who answered every earlier riddle at the first try. Used by Maestro to reach the final
+  puzzle and the end screen; it only skips ahead in a local, non-competitive game.
 - No account, no ads, no backend.
 - Android: minSdk from the stack defaults; portrait.
 - Privacy: opt-in telemetry, no personal data, no device identifier, the position never leaves the phone, AD_ID
