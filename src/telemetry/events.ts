@@ -2,8 +2,14 @@
 // Params are numbers or short lowercase enums. Never identifiers, names, free text or locations.
 
 export type TelemetryEvents = {
-  game_start: { level: number };
-  game_over: { level: number; score: number; duration_s: number };
+  adventure_start: { resumed: boolean; step: number };
+  place_reached: { step: number; method: 'auto' | 'manual' | 'manual_no_gps' };
+  maps_opened: { step: number };
+  riddle_solved: { step: number; first_try: boolean; wrong: number };
+  final_puzzle_solved: { wrong: number; revealed: number };
+  adventure_finished: { score: number };
+  adventure_rating: { rating: number };
+  settings_change: { setting: 'language' | 'sound' | 'haptics'; value: string };
 };
 
 export type EventName = keyof TelemetryEvents;

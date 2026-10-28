@@ -1,7 +1,7 @@
 import { useEffect, useReducer, useRef, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { durationSeconds, initialState, reduce, remainingSeconds } from '../game/engine';
+import { initialState, reduce, remainingSeconds } from '../game/engine';
 import { useI18n } from '../i18n/I18nProvider';
 import { track } from '../telemetry/telemetry';
 import { Button } from '../ui/Button';
@@ -21,7 +21,7 @@ export function GameScreen({ onExit, onGameOver }: Props) {
     const t = Date.now();
     dispatch({ type: 'start', now: t });
     setNow(t);
-    track('game_start', { level: 1 });
+    track('adventure_start', { resumed: false, step: 0 });
   };
 
   useEffect(start, []); // eslint-disable-line react-hooks/exhaustive-deps
@@ -39,7 +39,7 @@ export function GameScreen({ onExit, onGameOver }: Props) {
   useEffect(() => {
     if (state.status !== 'over' || reported.current) return;
     reported.current = true;
-    track('game_over', { level: state.level, score: state.score, duration_s: durationSeconds(state) });
+    track('adventure_finished', { score: state.score });
     onGameOver(state.score);
   }, [state, onGameOver]);
 
