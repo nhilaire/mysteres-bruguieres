@@ -17,7 +17,7 @@ Format: `- [ ] T-01 Title (AC-01, AC-02) - proof: unit|e2e|device`. Check the bo
 - [x] T-10 Sound and haptics service gated by the settings, bells on the church narration screen (AC-25, AC-34) - proof: unit
 - [x] T-11 Location permission states and explainer screen (6 states, AppState re-check, "Play without GPS") (AC-07, AC-08) - proof: unit
 - [x] T-12 Workshop theme, title screen (new / in progress, progress card, restart confirmation) and settings screen (language, sounds, vibrations, statistics) (AC-06, AC-03, AC-25, AC-01) - proof: unit
-- [ ] T-13 Narration screen: typewriter text, talking sprite with breathing, screen transitions (AC-09) - proof: unit
+- [x] T-13 Narration screen: typewriter text, talking sprite with breathing, screen transitions (AC-09) - proof: unit
 - [ ] T-14 Radar screen: GPS and compass hooks, animated SVG radar (sweep, pulse rings, coloured blip, smoothed arrow, arrival flash), I'm here / maps buttons (AC-14, AC-12) - proof: unit
 - [ ] T-15 Riddle screen with Auguste reactions (happy / head scratching), green/red states (AC-17, AC-16) - proof: unit
 - [ ] T-16 Final puzzle screen: numbers, alphabet strip, keypad, letter flip, GAMOUNA reveal with surprised reaction (AC-19, AC-20) - proof: unit

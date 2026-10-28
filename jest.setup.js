@@ -49,3 +49,7 @@ jest.mock('expo-sensors', () => ({
   Magnetometer: { isAvailableAsync: jest.fn(() => Promise.resolve(false)), addListener: jest.fn(() => ({ remove: jest.fn() })), setUpdateInterval: jest.fn() },
   Accelerometer: { isAvailableAsync: jest.fn(() => Promise.resolve(false)), addListener: jest.fn(() => ({ remove: jest.fn() })), setUpdateInterval: jest.fn() },
 }));
+
+// Reanimated 4 and Worklets: their official mocks (animations jump to their end value).
+jest.mock('react-native-worklets', () => require('react-native-worklets/lib/module/mock'));
+jest.mock('react-native-reanimated', () => require('react-native-reanimated/mock'));
