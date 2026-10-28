@@ -29,7 +29,7 @@ Format: `- [ ] T-01 Title (AC-01, AC-02) - proof: unit|e2e|device`. Check the bo
 - [x] T-22 Maestro flows: consent + relaunch, language, title, location explainer, radar arrival with mocked location, riddle, final puzzle, end + rating, resume after kill, about, telemetry (AC-01, AC-03, AC-06, AC-07, AC-14, AC-17, AC-20, AC-23, AC-24, AC-27, AC-28) - proof: e2e
 - [x] T-23 Device checks list for verify and release: launcher name per language, cold start, no crash, manifest permissions, on-site walk, feel (AC-04, AC-29, AC-30, AC-31, AC-35) - proof: device
 
-- [ ] T-24 Hide the Android navigation bar (config plugin on MainActivity, re-hidden on focus) (AC-36) - proof: device
+- [x] T-24 Hide the Android navigation bar (config plugin on MainActivity, re-hidden on focus) (AC-36) - proof: device
 
 ## Notes
 
