@@ -30,6 +30,7 @@ Format: `- [ ] T-01 Title (AC-01, AC-02) - proof: unit|e2e|device`. Check the bo
 - [x] T-23 Device checks list for verify and release: launcher name per language, cold start, no crash, manifest permissions, on-site walk, feel (AC-04, AC-29, AC-30, AC-31, AC-35) - proof: device
 
 - [x] T-24 Hide the Android navigation bar (config plugin on MainActivity, re-hidden on focus) (AC-36) - proof: device
+- [x] T-25 Riddle: the right answer stays on screen with the point message until Continue (AC-17) - proof: unit
 
 ## Notes
 

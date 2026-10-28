@@ -5,7 +5,7 @@ Project slug: mysteres-bruguieres
 Final app name: Mystère à Bruguières
 Android package: io.github.nhilaire.mysteresbruguieres
 Version target: 0.1.0
-Last updated: 2026-10-28 (amended after the phone test: AC-36)
+Last updated: 2026-10-28 (amended after the phone test: AC-36, AC-17)
 
 > Written in English. Player-facing text is quoted in the "Player copy" section, in every language of the game
 > (`factory-app.json` "languages"; French is the reference).
@@ -146,7 +146,9 @@ flowchart TD
 
 ### Riddles
 
-- Right answer: button turns green, Auguste's happy reaction, success sound + vibration, next screen after 800 ms.
+- Right answer: button turns green, Auguste's happy reaction, success sound + vibration, "+1 point" (or "no point
+  this time" after a wrong answer); the riddle stays on screen until the player taps "Continue" (amended after the
+  phone test, 2026-10-28: the former 800 ms auto-advance was too fast).
 - Wrong answer: button turns red for 1 500 ms, Auguste scratches his head, error sound; the player can try again.
 - **1 point only if the right answer is the first answer given** on that riddle. A solved riddle is read-only when
   revisited and never scores again.
@@ -293,7 +295,7 @@ identifiers, no position, no free text.
 - AC-16 [unit] Given a riddle answered right first, the score increments by 1; answered wrong then right, the score
   does not change; revisiting a solved riddle never changes the score.
 - AC-17 [e2e] Given a riddle, a wrong answer shows the red state and allows a retry; the right answer shows the green
-  state and moves to the next screen. The right answer shows Auguste's happy reaction portrait, the wrong one his
+  state, the point message and a Continue button that moves to the next screen (no automatic advance). The right answer shows Auguste's happy reaction portrait, the wrong one his
   head-scratching portrait.
 - AC-18 [unit] Given the scenario answers, the 7 final operations give 7, 1, 13, 15, 21, 14, 1, i.e. "GAMOUNA".
 - AC-19 [unit] Final puzzle state: a right result reveals the letter and activates the next line; a wrong result
@@ -388,6 +390,10 @@ Final app name: fr « Mystère à Bruguières », en "Mystery in Bruguières".
 | dir.n / ne / e / se / s / sw / w / nw | Nord / Nord-Est / Est / Sud-Est / Sud / Sud-Ouest / Ouest / Nord-Ouest | North / North-East / East / South-East / South / South-West / West / North-West |
 | quiz.waiting | En attente de ta réponse… | Waiting for your answer… |
 | quiz.answer | Réponse : {{choice}} | Answer: {{choice}} |
+| quiz.right | Bravo ! | Well done! |
+| quiz.point | +1 point : trouvé du premier coup ! | +1 point: solved at the first try! |
+| quiz.noPoint | Pas de point cette fois : il fallait trouver du premier coup. | No point this time: it takes the first try. |
+| quiz.continue | Continuer | Continue |
 | puzzle.title | Le dernier mécanisme | The last mechanism |
 | puzzle.intro | Tes 9 chiffres sont les rouages. Fais chaque calcul : le résultat donne la place d'une lettre dans l'alphabet. | Your 9 numbers are the gears. Work out each sum: the result gives a letter's place in the alphabet. |
 | puzzle.validate | Valider | Check |
