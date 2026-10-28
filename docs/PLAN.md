@@ -22,7 +22,7 @@ Format: `- [ ] T-01 Title (AC-01, AC-02) - proof: unit|e2e|device`. Check the bo
 - [x] T-15 Riddle screen with Auguste reactions (happy / head scratching), green/red states (AC-17, AC-16) - proof: unit
 - [x] T-16 Final puzzle screen: numbers, alphabet strip, keypad, letter flip, GAMOUNA reveal with surprised reaction (AC-19, AC-20) - proof: unit
 - [x] T-17 End screen: score x/9, one-time rating (AC-24) - proof: unit
-- [ ] T-18 Game router, menu button, Android back, App routes and resume (AC-21, AC-23, AC-06) - proof: unit
+- [x] T-18 Game router, menu button, Android back, App routes and resume (AC-21, AC-23, AC-06) - proof: unit
 - [ ] T-19 About screen: story, how it works, developer line, data, version (AC-28) - proof: unit
 - [ ] T-20 Telemetry calls for the 8 PRD events, consent stored and switchable (AC-26, AC-01, AC-33) - proof: unit
 - [ ] T-21 App config: expo-location / expo-sensors / expo-audio plugins, blocked permissions, testing deep link (AC-30) - proof: unit
