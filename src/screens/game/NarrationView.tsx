@@ -46,7 +46,7 @@ export function NarrationView({ texts, sound, onFinish }: Props) {
   return (
     <View style={styles.container}>
       <View style={styles.portrait}>
-        <AugustePortrait width={portraitWidth} pose={state.block} talking={typing} />
+        <AugustePortrait width={portraitWidth} pose={state.block} talking={typing} breathing />
       </View>
       <Pressable style={styles.card} onPress={tap} accessibilityRole="button" accessibilityHint={hint} testID="narration-tap">
         <ScrollView contentContainerStyle={styles.scroll}>

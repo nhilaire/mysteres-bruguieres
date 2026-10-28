@@ -16,11 +16,14 @@ type Props = {
   pose?: number;
   reaction?: Reaction;
   talking?: boolean;
+  // Slow breathing loop. Only on narration screens: a never-ending transform keeps the accessibility tree moving,
+  // which stalls UI automation on screens with many taps (riddles, final puzzle).
+  breathing?: boolean;
 };
 
 // Auguste's portrait. All sprite sheets stay mounted (only the current one is visible) so that changing pose or
 // mouth never reloads an image: changing a frame only moves the sheet behind a fixed window.
-export function AugustePortrait({ width, pose = 0, reaction, talking = false }: Props) {
+export function AugustePortrait({ width, pose = 0, reaction, talking = false, breathing = false }: Props) {
   const { t } = useI18n();
   const height = width * PORTRAIT_RATIO;
   const [step, setStep] = useState(0);
@@ -37,9 +40,13 @@ export function AugustePortrait({ width, pose = 0, reaction, talking = false }: 
   // Slow breathing at rest and while talking: the portrait never looks frozen.
   const breath = useSharedValue(1);
   useEffect(() => {
+    if (!breathing) return;
     breath.value = withRepeat(withTiming(1.02, { duration: 2200, easing: Easing.inOut(Easing.sin) }), -1, true);
-    return () => cancelAnimation(breath);
-  }, [breath]);
+    return () => {
+      cancelAnimation(breath);
+      breath.value = 1;
+    };
+  }, [breath, breathing]);
   const breathing = useAnimatedStyle(() => ({ transform: [{ scale: breath.value }] }));
 
   const mouth = talking ? MOUTH_SEQUENCE[step % MOUTH_SEQUENCE.length] : 0;
