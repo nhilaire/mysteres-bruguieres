@@ -1,0 +1,312 @@
+{
+  "screens": [
+    {
+      "type": "home",
+      "texts": [
+        "Bienvenue dans l'aventure Mystère à Bruguières ! Une aventure interactive où tu vas découvrir Bruguières à travers une mystérieuse enquête… Quand tu es prêt, tapote sur le texte pour passer à la suite…",
+        "Chère aventurière, cher aventurier… Si tu lis ces mots, c’est que le Temps a bien voulu m’écouter. Mon nom est Auguste Meridius, maître horloger et garde-mémoire de Bruguières. J’ai égaré un souvenir… un souvenir précieux, caché dans les lieux mêmes qui firent battre le cœur de cette ville.",
+        "Une énigme. Une course contre l’oubli. Une quête… du temps perdu.",
+        "Seras-tu assez futé(e) pour le retrouver ? Suis-moi, et écoute bien mes mots. Chaque lieu te révèlera un chiffre, et ces chiffres, une fois réunis… réveilleront le passé."
+      ]
+    },
+    {
+      "type": "explanation",
+      "texts": [
+        "C’est ici que tout commence : impossible de déchiffrer les messages du passé sans revenir au cœur de la ville. Un lieu emblématique, mais tourné vers l'avenir.",
+        "La mairie de Bruguières, lieu incontournable de la vie de la ville. Savais-tu que cette mairie ne s'est pas toujours trouvée là et qu'elle a abrité des bains-douches dans les années 50 ? Et même autre chose…",
+        "Alors c'est le moment de remonter le temps et de fouiller dans la mémoire de Bruguières. Ton périple peut se faire à pied ou même en vélo.",
+        "Savais-tu que Bruguières tire son nom des brugues qui fleurissaient sur ses coteaux ? Le mot occitan « bruguièra » désigne précisément un terrain où poussent les bruyères.",
+        "On retrouve cette idée dans les noms des villes voisines comme Lespinasse (épines), Castelginest (genêts) ou Fenouillet (fenouil)…"
+      ]
+    },
+    {
+      "type": "explanation",
+      "texts": [
+        "Au cours de ton périple, je te confie ce radar spécial qui te guidera vers les lieux importants. Il te permettra de te rapprocher de chaque indice.",
+        "Utilise-le avec sagesse, car chaque point que tu découvriras te rapprochera de la vérité…",
+        "Sache également que tu peux stopper l'aventure à tout moment et reprendre plus tard. Maintenant, c'est à toi de jouer !"
+      ]
+    },
+    {
+      "type": "radar",
+      "latitude": 43.727059034536445,
+      "longitude": 1.4119849607099955,
+      "message": "Rends-toi à la mairie"
+    },
+    {
+      "type": "quiz",
+      "intro": "Bravo, tu es arrivé(e) au premier lieu clé !",
+      "question": "Regarde la plaque qui parle de l'ancien puit. Quel est la taille du côté du carré en mètres ?",
+      "choices": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "answer": "2"
+    },
+    {
+      "type": "explanation",
+      "texts": [
+        "Laisse derrière toi la mairie et ses reflets pour rejoindre un quartier plus ancien, plus discret. Là-bas, le silence a des sabots.",
+        "Tu sauras que tu es arrivé(e) lorsque ton regard croisera celui d’une étrange sentinelle sculptée : une tête de cheval, figée dans le temps, qui veille sur une demeure endormie.",
+        "J'ai toujours adoré ce lieu. Quand j'étais enfant, je l'appelais la maison au destrier. Son architecture a toujours eu un goût pour la répétition, pour les motifs cachés dans la pierre. Observe bien. La façade est rythmée, comme une respiration : des passages, des voûtes, des porches… autant de bouches muettes prêtes à livrer leur secret.",
+        "Compte-les. Ces ouvertures te murmurent un chiffre. Et ce chiffre… est une clef."
+      ]
+    },
+    {
+      "type": "radar",
+      "latitude": 43.7278743777216,
+      "longitude": 1.4117646606429972,
+      "message": "Rends-toi à la maison de la tête de cheval"
+    },
+    {
+      "type": "quiz",
+      "intro": "Bravo, tu as trouvé la maison du cheval de pierre !",
+      "question": "Combien de porches peux-tu compter sur cette étrange façade ?",
+      "choices": [
+        "6",
+        "8",
+        "9",
+        "10",
+        "12"
+      ],
+      "answer": "9"
+    },
+    {
+      "type": "explanation",
+      "texts": [
+        "Laissons de côté les destriers pour aller nous rafraîchir.",
+        "Il existe un point d'eau décoratif proche d'ici. Il fait partie d'un vaste projet de réaménagement de la place principale de Bruguières.",
+        "Ici, on accueille également le renne du Père Noël en décembre… Sauras-tu retrouver cette fontaine ?"
+      ]
+    },
+    {
+      "type": "radar",
+      "latitude": 43.72744077745599,
+      "longitude": 1.4118716541325393,
+      "message": "Rends-toi à la fontaine aux escaliers"
+    },
+    {
+      "type": "quiz",
+      "intro": "Tu es arrivé(e) devant la fontaine, bravo !",
+      "question": "Combien peut-on compter de marches sous cette eau ruisselante ?",
+      "choices": [
+        "4",
+        "6",
+        "8",
+        "12",
+        "16"
+      ],
+      "answer": "8"
+    },
+    {
+      "type": "explanation",
+      "texts": [
+        "Il est un lieu où les esprits se rassemblent, où les mots dorment sur des étagères et où le silence règne en maître.",
+        "Ce lieu de savoir est gardé par une créature. Un colosse tranquille aux grandes oreilles, figé dans la pierre.",
+        "Certains enfants lui font des câlins, d'autres des grimaces, beaucoup lui montent sur le dos ; mais il reste impassible. Moi, je l’ai vu arriver. Ce fut un jour particulier, gravé dans ma mémoire comme dans la roche. Une inauguration, simple et modeste, mais pleine de promesses.",
+        "Cet animal fut accueilli comme un vieux sage. Depuis, il observe les lecteurs, les musiciens et les sportifs. Regarde bien. Une plaque t’en dira plus…"
+      ]
+    },
+    {
+      "type": "radar",
+      "latitude": 43.72433697207272,
+      "longitude": 1.4104597659614353,
+      "message": "Rends-toi à la médiathèque"
+    },
+    {
+      "type": "quiz",
+      "intro": "Tu te tiens devant le gardien de pierre, l’éléphant silencieux.",
+      "question": "Quel jour du mois de novembre l’éléphant a-t-il été inauguré ?",
+      "choices": [
+        "12",
+        "17",
+        "19",
+        "21",
+        "25"
+      ],
+      "answer": "21"
+    },
+    {
+      "type": "explanation",
+      "texts": [
+        "Parfois, les mystères se nichent dans les endroits les plus simples… Un carré de verdure, quelques bancs, des jeux pour enfants, et une paix que même le vent respecte. C’est dans un square comme celui-ci que je venais m’asseoir pour écouter le monde respirer. Ici, tout semble figé et pourtant, tout bouge en silence.",
+        "Mais cette fois, ne regarde pas les passants. Cherche la lumière. Il y a des sentinelles silencieuses, posées là pour veiller quand la nuit tombe. Elles sont vertes, comme les vieux contes de fées ou les lanternes magiques de mon enfance.",
+        "Compter ces lanternes, c’est comme compter les battements d’un cœur oublié. Ne te trompe pas : c’est une lumière qui t’éclaire vers la suite."
+      ]
+    },
+    {
+      "type": "radar",
+      "latitude": 43.72501828891252,
+      "longitude": 1.4162284508989935,
+      "message": "Rends-toi au Square Bellevue"
+    },
+    {
+      "type": "quiz",
+      "intro": "Le square t’enveloppe de sa tranquillité… mais il cache un secret lumineux.",
+      "question": "Combien de lampes vertes peux-tu compter dans ce square ? Avant de répondre, monte le son !!",
+      "choices": [
+        "12",
+        "14",
+        "15",
+        "17",
+        "18"
+      ],
+      "answer": "17"
+    },
+    {
+      "type": "explanation",
+      "texts": [
+        "Tu as encore un peu plus avancé dans cette quête ! Si tu as monté le son, tu dois entendre une musique…",
+        "Mais, quelle est-elle ?",
+        "En tant qu'habitant de Bruguières, je connais bien cette mélodie. Elle me réveille régulièrement le matin, avec ses petites notes désaccordées.",
+        "Je pense que l'indice est clair, ton radar t’est-il utile ?"
+      ],
+      "sound": "bells"
+    },
+    {
+      "type": "radar",
+      "latitude": 43.7276202266518,
+      "longitude": 1.4106130434146333,
+      "message": "Rends-toi à l'église"
+    },
+    {
+      "type": "quiz",
+      "intro": "Tu es devant l'église, regarde son clocher mur typique de la région toulousaine.",
+      "question": "Combien comporte-t'il de fenêtres ?",
+      "choices": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "answer": "5"
+    },
+    {
+      "type": "explanation",
+      "texts": [
+        "Savais-tu qu'un vol a été commis dans cette église ? En 1557, trois personnes dérobent le manteau de la statue de la Vierge. On raconte que la cloche s'est mise à sonner toute seule, alertant les voisins qui découvrent le vol. Les voleurs ont ensuite été retrouvés à Grenade, en train de revendre leur butin.",
+        "Maintenant, tu t’approches des murmures du passé. Là où l’eau n’était pas un loisir, mais une tâche, un devoir, un moment partagé entre confidences et lessives : l’ancien lavoir. Je m’y suis souvent arrêté, non pour laver, mais pour écouter. Les pierres ont la mémoire des mains, tu sais. Elles ont gardé les éclats de voix, les secrets échappés, les silences pesants.",
+        "Regarde bien. Ce n’est pas un monument, c’est une scène. Chaque pierre de lavage est une actrice figée dans la mousse du temps. Ne compte pas les murs. Ne regarde pas le toit. Compte les pierres. Celles sur lesquelles on frottait, on rinçait, on parlait.",
+        "Savais-tu que ce lavoir est alimenté par une source constituée des eaux d’infiltration des coteaux ? On l'appelle la Fontaine de Bruguières."
+      ]
+    },
+    {
+      "type": "radar",
+      "latitude": 43.728459129275315,
+      "longitude": 1.4091807616692806,
+      "message": "Rends-toi au lavoir"
+    },
+    {
+      "type": "quiz",
+      "intro": "Tu es devant le lavoir, édifié au XIXe siècle.",
+      "question": "Combien de pierres à laver peux-tu compter dans ce lavoir ?",
+      "choices": [
+        "3",
+        "4",
+        "5",
+        "6",
+        "7"
+      ],
+      "answer": "4"
+    },
+    {
+      "type": "explanation",
+      "texts": [
+        "Continue maintenant ton périple vers un lieu calme et paisible. Là où l’eau épouse le ciel, et où les pas résonnent dans les souvenirs mouillés. Tu y trouveras un miroir vaste et tranquille, peuplé d’ailés glisseurs, glougloutant leurs secrets au fil de l’onde.",
+        "Mais ce n’est pas en restant au ras du sol que l’on comprend ce lieu. Il faut prendre de la hauteur. Non pas voler, non. Mais gravir. Lentement. Tu verras, un perchoir de pierre s’y dresse.",
+        "Monte. Et compte. Chaque pas vers le sommet est une syllabe du passé. Je l’ai souvent monté, cet escalier, pas pour faire de l’exercice, mais pour réfléchir…",
+        "… et pour observer les canards, je l’avoue."
+      ]
+    },
+    {
+      "type": "radar",
+      "latitude": 43.72988285274553,
+      "longitude": 1.4065839739318746,
+      "message": "Rends-toi au perchoir de la base de loisirs"
+    },
+    {
+      "type": "quiz",
+      "intro": "Bravo, tu es arrivé(e).",
+      "question": "Combien de marches as-tu montées pour atteindre le sommet ?",
+      "choices": [
+        "5",
+        "7",
+        "9",
+        "11",
+        "15"
+      ],
+      "answer": "7"
+    },
+    {
+      "type": "explanation",
+      "texts": [
+        "Avant que tu ne rassembles tes chiffres, accorde-moi un dernier détour. Il y a tout près d'ici un lieu que ma mémoire ne connaît pas… et c'est précisément pour cela qu'il m'intrigue.",
+        "Cherche une table de pierre. Pas une table pour manger : une table où l'on s'assoit face à face, où l'on ne se parle guère, et où l'on pousse de petites armées de bois sur un damier de cases claires et sombres.",
+        "Les échecs… le seul jeu au monde qui se joue avec une horloge à deux visages : quand l'un réfléchit, le temps de l'autre s'arrête. Tu comprendras qu'un horloger comme moi ne puisse pas passer devant sans s'attarder.",
+        "Mais prends garde : cette table-là est plus rusée qu'elle n'en a l'air. Ne te fie pas à ce que tu crois savoir d'un échiquier. Compte ses cases. Toutes ses cases, jusqu'aux bords, sans en oublier une seule."
+      ]
+    },
+    {
+      "type": "radar",
+      "latitude": 43.731519116926385,
+      "longitude": 1.4057092818924328,
+      "message": "Rends-toi à la table d'échecs"
+    },
+    {
+      "type": "quiz",
+      "intro": "Te voilà devant la table de jeu.",
+      "question": "Combien de cases compte le damier gravé sur cette table ?",
+      "choices": [
+        "36",
+        "49",
+        "81",
+        "100",
+        "121"
+      ],
+      "answer": "100"
+    },
+    {
+      "type": "explanation",
+      "texts": [
+        "Cent cases ! Dix rangées de dix. Or un échiquier n'en compte que soixante-quatre… Regarde la bordure : sa couleur change légèrement. Cette table cache deux jeux d'un seul coup — le grand damier des dames, et l'échiquier tapi en son cœur.",
+        "Je te l'avoue sans détour : c'est le second qui a ma préférence. Les dames sont un joli passe-temps, mais les échecs sont le jeu des horlogers, celui où chaque seconde de réflexion se paie.",
+        "Pourtant, le vrai secret de cette table n'est pas gravé dessus. Sais-tu qui l'a posée là ? Ni un roi, ni un notable, ni même un maire : les Bruguiérois eux-mêmes.",
+        "Chaque année, la ville confie une part de son budget à ses habitants : ils proposent des projets, ils votent, et ceux qui l'emportent sortent de terre. Cette table est l'un d'eux — et sa sœur jumelle t'attend du côté de la médiathèque.",
+        "Voilà un lieu qui n'appartient pas au passé de Bruguières, mais à ce que ses habitants continuent d'écrire. Retiens tout de même ces cent cases : ce sera ton dernier chiffre."
+      ]
+    },
+    {
+      "type": "explanation",
+      "texts": [
+        "Bravo, tu as encore un peu plus avancé dans cette quête ! Je te rappelle les chiffres qu'il fallait trouver.",
+        "2 mètres, 9 porches, 8 marches, 21 novembre, 17 lampes vertes, 5 fenêtres, 4 pierres à laver, 7 marches et 100 cases. Pour résoudre l'énigme, tu as des opérations simples à réaliser.",
+        "Ces nombres devront être convertis via leur emplacement dans l'alphabet. Et tu auras le mot mystère…"
+      ]
+    },
+    {
+      "type": "final_puzzle"
+    },
+    {
+      "type": "explanation",
+      "texts": [
+        "Ta quête est désormais terminée, félicitations. Le mot à trouver était GAMOUNA.",
+        "Les chiffres que tu as récoltés, les lieux que tu as explorés, les mystères que tu as élucidés… tout cela formait bien plus qu’une simple chasse au trésor.",
+        "Tu as marché dans les pas du passé, réveillé des souvenirs endormis et donné vie à l’histoire d’un village qui cache bien des secrets derrière ses pierres tranquilles.",
+        "Sache que GAMOUNA, en languedocien, signifie « Gué des moines », oui, comme la route proche d'ici et la brasserie que l'on voit au loin, à laquelle elle fait référence.",
+        "Autrefois, il fallait payer pour franchir l'Hers sur le pont et on traversait donc la rivière à gué pour aller jusqu'au monastère de Lespinasse, d'où le nom Gamouna…",
+        "Merci de m'avoir fait revivre ces moments du passé. Moi, Auguste Meridius, je peux maintenant reposer l’esprit en paix. Mais surtout… n’oublie jamais que chaque lieu a une histoire, que chaque pierre a une mémoire, et que parfois, il suffit d’un pas pour faire revivre un monde oublié."
+      ]
+    },
+    {
+      "type": "final",
+      "texts": [
+        "Merci d’avoir joué à Mystère à Bruguières.",
+        "Que tes pas te portent encore vers d’autres aventures…"
+      ]
+    }
+  ]
+}

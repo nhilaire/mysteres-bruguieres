@@ -8,10 +8,18 @@
     "@react-native-firebase/app": "^27.1.0",
     "@react-native-firebase/crashlytics": "^27.1.0",
     "expo": "~57.0.31",
+    "expo-asset": "~57.0.20",
+    "expo-audio": "~57.0.5",
+    "expo-haptics": "~57.0.3",
     "expo-localization": "~57.0.2",
+    "expo-location": "~57.0.22",
+    "expo-sensors": "~57.0.3",
     "expo-status-bar": "~57.0.1",
     "react": "19.2.3",
-    "react-native": "0.86.3"
+    "react-native": "0.86.3",
+    "react-native-reanimated": "4.5.1",
+    "react-native-svg": "15.15.4",
+    "react-native-worklets": "0.10.1"
   },
   "devDependencies": {
     "@testing-library/react-native": "^14.1.0",

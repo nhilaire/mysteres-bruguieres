@@ -4,5 +4,5 @@ module.exports = {
   setupFiles: ['./jest.setup.js'],
   // Full-app renders exceed the 5 s default when the emulator loads the machine during verify.
   testTimeout: 30000,
-  testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/android/', '<rootDir>/ios/'],
+  testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/android/', '<rootDir>/ios/', '/__tests__/helpers/'],
 };
