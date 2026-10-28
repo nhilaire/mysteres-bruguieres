@@ -27,7 +27,7 @@ Format: `- [ ] T-01 Title (AC-01, AC-02) - proof: unit|e2e|device`. Check the bo
 - [x] T-20 Telemetry calls for the 8 PRD events, consent stored and switchable (AC-26, AC-01, AC-33) - proof: unit
 - [x] T-21 App config: expo-location / expo-sensors / expo-audio plugins, blocked permissions, testing deep link (AC-30) - proof: unit
 - [x] T-22 Maestro flows: consent + relaunch, language, title, location explainer, radar arrival with mocked location, riddle, final puzzle, end + rating, resume after kill, about, telemetry (AC-01, AC-03, AC-06, AC-07, AC-14, AC-17, AC-20, AC-23, AC-24, AC-27, AC-28) - proof: e2e
-- [ ] T-23 Device checks list for verify and release: launcher name per language, cold start, no crash, manifest permissions, on-site walk, feel (AC-04, AC-29, AC-30, AC-31, AC-35) - proof: device
+- [x] T-23 Device checks list for verify and release: launcher name per language, cold start, no crash, manifest permissions, on-site walk, feel (AC-04, AC-29, AC-30, AC-31, AC-35) - proof: device
 
 ## Notes
 
