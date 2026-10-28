@@ -65,7 +65,7 @@ describe('App', () => {
     await fireEvent.press(await screen.findByText('À propos du jeu'));
     expect(screen.getByTestId('about-screen')).toBeTruthy();
     expect(screen.getByText("L'histoire de ce jeu")).toBeTruthy();
-    expect(screen.getByText(/développeur passionné/)).toBeTruthy();
+    expect(screen.getByText(/développeur indépendant passionné/)).toBeTruthy();
     expect(screen.getByText(/bugs/)).toBeTruthy();
     expect(screen.getByText(/^Version [0-9]+[.][0-9]+[.][0-9]+$/)).toBeTruthy();
   });
