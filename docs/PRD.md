@@ -146,7 +146,7 @@ flowchart TD
 
 ### Riddles
 
-- Right answer: button turns green, Auguste's happy reaction, success sound + vibration, "+1 point" (or "no point
+- Right answer: button turns green, Auguste's amazed reaction (hand on the cheek, board h9oqowh9), success sound + vibration, "+1 point" (or "no point
   this time" after a wrong answer); the riddle stays on screen until the player taps "Continue" (amended after the
   phone test, 2026-10-28: the former 800 ms auto-advance was too fast).
 - Wrong answer: button turns red for 1 500 ms, Auguste scratches his head, error sound; the player can try again.
@@ -295,7 +295,7 @@ identifiers, no position, no free text.
 - AC-16 [unit] Given a riddle answered right first, the score increments by 1; answered wrong then right, the score
   does not change; revisiting a solved riddle never changes the score.
 - AC-17 [e2e] Given a riddle, a wrong answer shows the red state and allows a retry; the right answer shows the green
-  state, the point message and a Continue button that moves to the next screen (no automatic advance). The right answer shows Auguste's happy reaction portrait, the wrong one his
+  state, the point message and a Continue button that moves to the next screen (no automatic advance). The right answer shows Auguste's amazed reaction portrait (hand on the cheek), the wrong one his
   head-scratching portrait.
 - AC-18 [unit] Given the scenario answers, the 7 final operations give 7, 1, 13, 15, 21, 14, 1, i.e. "GAMOUNA".
 - AC-19 [unit] Final puzzle state: a right result reveals the letter and activates the next line; a wrong result
