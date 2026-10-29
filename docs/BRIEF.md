@@ -6,7 +6,7 @@ Final app name: Mystère à Bruguières
 
 ## Original brief
 
-il s'agit d'un jeu d'exploration d'une ville, dont la grosse partie est faite ici C:\dev\mysteres-bruguieres-react, à repasser dans l'usine.
+il s'agit d'un jeu d'exploration d'une ville, dont la grosse partie est faite ici [un projet local antérieur, non publié], à repasser dans l'usine.
 On n'hésite pas à améliorer des choses, comme les animations, l'interaction, le radar, etc.
 public famillle
 

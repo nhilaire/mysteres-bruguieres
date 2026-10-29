@@ -21,8 +21,10 @@ Android phone (allow installation from unknown sources).
 ## Privacy
 
 - No account, no ads, no personal data.
-- Anonymous usage statistics and crash reports (Firebase) are sent **only if you accept** on first launch.
-  You can change your choice at any time in *Paramètres*.
+- Opt-in only: if you accept on first launch, anonymous Firebase statistics (steps reached, riddles solved at the
+  first try, how a place was reached, final score and rating, settings changes) and crash reports are sent.
+- No identifier, no advertising ID, no position: your location is used only on the phone to guide the radar.
+- You can change your choice at any time in *Settings* (*Réglages*).
 
 ## Build from source
 
