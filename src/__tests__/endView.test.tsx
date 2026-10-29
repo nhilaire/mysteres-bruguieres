@@ -23,11 +23,11 @@ function Harness({ onRate }: { onRate: (n: number) => void }) {
 it('shows the score out of 9, records one rating, then the stars are read-only with a thank-you', async () => {
   const onRate = jest.fn();
   await render(<Harness onRate={onRate} />);
-  expect(screen.getByTestId('end-score').props.children).toBe('Énigmes trouvées du premier coup : 7 / 9');
-  expect(screen.getByText('Donne ta note à cette aventure :')).toBeTruthy();
+  expect(screen.getByTestId('end-score').props.children).toBe('Énigmes trouvées du premier coup\u00a0: 7\u00a0/\u00a09');
+  expect(screen.getByText('Donne ta note à cette aventure\u00a0:')).toBeTruthy();
   await fireEvent.press(screen.getByTestId('end-star-4'));
   expect(onRate).toHaveBeenCalledWith(4);
-  expect(screen.getByText('Merci pour ta note !')).toBeTruthy();
+  expect(screen.getByText('Merci pour ta note\u202f!')).toBeTruthy();
   expect(screen.getByTestId('end-star-4').props.accessibilityState).toMatchObject({ checked: true, disabled: true });
   await fireEvent.press(screen.getByTestId('end-star-1'));
   expect(onRate).toHaveBeenCalledTimes(1);

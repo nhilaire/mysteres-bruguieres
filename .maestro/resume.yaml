@@ -3,7 +3,7 @@ name: Resume - kill and relaunch, Continue resumes on the same screen
 tags:
   - resume
 ---
-# AC-23, AC-06 (title of an adventure in progress).
+# AC-23 (same screen and same score after a relaunch), AC-06 (title of an adventure in progress).
 - launchApp:
     clearState: true
     permissions:
@@ -14,10 +14,10 @@ tags:
     timeout: 30000
 - tapOn:
     id: "consent-refuse"
-- openLink: mysteresbruguieres://seed/4
+- openLink: mysteresbruguieres://seed/33
 - extendedWaitUntil:
     visible:
-      id: "game-step-4"
+      id: "game-step-33"
     timeout: 10000
 - stopApp
 - launchApp:
@@ -35,7 +35,8 @@ tags:
     id: "title-continue"
 - extendedWaitUntil:
     visible:
-      id: "game-step-4"
+      id: "game-step-33"
     timeout: 10000
 - assertVisible:
-    id: "quiz-screen"
+    id: "end-score"
+- assertVisible: ".*9.*/.*9"

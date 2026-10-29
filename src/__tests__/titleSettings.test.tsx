@@ -20,7 +20,7 @@ describe('title screen', () => {
   it('shows the progress card, Continue and Restart when in progress', async () => {
     await render(<TitleScreen summary={{ started: true, places: 3, solved: 2, percent: 36 }} {...handlers()} />);
     expect(screen.getByTestId('title-progress')).toBeTruthy();
-    expect(screen.getByText('36 % · 3 lieux sur 9 · 2 énigmes résolues')).toBeTruthy();
+    expect(screen.getByText('36\u00a0% · 3 lieux sur 9 · 2 énigmes résolues')).toBeTruthy();
     expect(screen.getByTestId('title-continue')).toBeTruthy();
     expect(screen.queryByTestId('title-start')).toBeNull();
   });

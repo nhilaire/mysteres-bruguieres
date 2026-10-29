@@ -47,7 +47,7 @@ describe('French typography', () => {
   });
 
   it('leaves English free of French no-break spaces', () => {
-    expect(texts(DICTIONARIES.en).filter((s) => /[  «»]/.test(s))).toEqual([]);
+    expect(texts(DICTIONARIES.en).filter((s) => /[\u00a0\u202f«»]/.test(s))).toEqual([]);
   });
 });
 
@@ -76,8 +76,8 @@ describe('resolveLanguage', () => {
 describe('formatting', () => {
   it('French: narrow no-break space for thousands, no-break space before a colon', () => {
     const fr = formatter('fr-FR');
-    expect(fr.integer(12345)).toBe('12 345');
-    expect(fr.label('Score', 3)).toBe('Score : 3');
+    expect(fr.integer(12345)).toBe('12\u202f345');
+    expect(fr.label('Score', 3)).toBe('Score\u00a0: 3');
   });
 
   it('English: comma for thousands, no space before a colon', () => {

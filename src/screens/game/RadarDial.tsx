@@ -132,6 +132,7 @@ export function RadarDial({ size, targetAngle, targetRadius, northAngle, arrow, 
       <Animated.View
         pointerEvents="none"
         style={[styles.flash, { width: 2 * r, height: 2 * r, borderRadius: r, left: c - r, top: c - r }, flashStyle]}
+        testID={arrived ? 'radar-arrived' : undefined}
       />
       <View pointerEvents="none" style={[styles.hub, { left: c - 7, top: c - 7 }]} />
     </View>

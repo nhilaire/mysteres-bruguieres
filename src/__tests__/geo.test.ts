@@ -8,7 +8,7 @@ import {
   shortestDelta,
 } from '../game/geo';
 
-const NBSP = ' ';
+const NBSP = '\u00a0';
 // One degree along a meridian (or the equator) on a sphere of radius 6 371 km.
 const ONE_DEGREE_M = (6371000 * Math.PI) / 180;
 

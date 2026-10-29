@@ -49,6 +49,6 @@ describe.each(others)('%s scenario', (language) => {
   });
 
   it('has no French no-break space', () => {
-    scenario.screens.flatMap(screenTexts).forEach((text) => expect(text).not.toMatch(/[  «»]/));
+    scenario.screens.flatMap(screenTexts).forEach((text) => expect(text).not.toMatch(/[\u00a0\u202f«»]/));
   });
 });

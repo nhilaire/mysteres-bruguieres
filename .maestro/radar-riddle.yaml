@@ -42,6 +42,11 @@ tags:
     longitude: 1.4119849607099955
 - extendedWaitUntil:
     visible:
+      id: "radar-arrived"
+    timeout: 20000
+- takeScreenshot: 05a-radar-arrived
+- extendedWaitUntil:
+    visible:
       id: "quiz-screen"
     timeout: 20000
 - takeScreenshot: 05-riddle

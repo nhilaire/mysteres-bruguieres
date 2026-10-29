@@ -31,7 +31,7 @@ it('a wrong answer turns red with the head-scratching portrait, then allows a re
   expect(screen.getByTestId('quiz-right')).toBeTruthy();
 });
 
-it('the right answer turns green with the happy portrait and stays until Continue', async () => {
+it('the right answer turns green with the amazed portrait and stays until Continue', async () => {
   const onNext = jest.fn();
   await render(<QuizView quiz={quiz} solved={false} onAnswer={judge} onNext={onNext} />);
   await fireEvent.press(screen.getByTestId('quiz-choice-1'));

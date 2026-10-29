@@ -35,11 +35,13 @@ it('arrives on its own after 2 readings within 15 m, with chime and vibration, t
   const onArrive = jest.fn();
   await render(<RadarView target={target} step={1} onArrive={onArrive} onLost={jest.fn()} />);
   await act(async () => emit(north(120)));
-  expect(screen.getByTestId('radar-status').props.children).toBe('120 m');
+  expect(screen.getByTestId('radar-status').props.children).toBe('120\u00a0m');
   await act(async () => emit(north(10)));
   expect(onArrive).not.toHaveBeenCalled();
   await act(async () => emit(north(8)));
-  expect(screen.getByText('Tu y es !')).toBeTruthy();
+  expect(screen.getByText('Tu y es\u202f!')).toBeTruthy();
+  // The arrival flash of the dial.
+  expect(screen.getByTestId('radar-arrived')).toBeTruthy();
   expect(playSound).toHaveBeenCalledWith('chime');
   expect(vibrate).toHaveBeenCalledWith('arrival');
   await act(async () => jest.advanceTimersByTime(ARRIVAL_DELAY_MS));
@@ -63,7 +65,7 @@ it('shows the step, the cardinal direction and hides the arrow without compass',
   await render(<RadarView target={target} step={3} onArrive={jest.fn()} onLost={jest.fn()} />);
   await act(async () => emit(north(300)));
   expect(screen.getByText('Étape 3 sur 9')).toBeTruthy();
-  expect(screen.getByText('Direction : Sud')).toBeTruthy();
+  expect(screen.getByText('Direction\u00a0: Sud')).toBeTruthy();
   expect(screen.queryByTestId('radar-arrow')).toBeNull();
 });
 

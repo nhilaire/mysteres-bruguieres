@@ -62,11 +62,11 @@ describe('resuming the adventure', () => {
   });
 
   it('continues on the same screen with the same score after a relaunch', async () => {
-    await AsyncStorage.setItem('game.progress.v1', JSON.stringify({ ...at(4), score: 0, reached: [3] }));
+    await AsyncStorage.setItem('game.progress.v1', JSON.stringify({ ...at(33), score: 5, reached: [3] }));
     await render(<App />);
     await fireEvent.press(await screen.findByTestId('title-continue'));
-    expect(await screen.findByTestId('game-step-4')).toBeTruthy();
-    expect(screen.getByTestId('quiz-screen')).toBeTruthy();
+    expect(await screen.findByTestId('game-step-33')).toBeTruthy();
+    expect(screen.getByTestId('end-score').props.children).toBe('Énigmes trouvées du premier coup\u00a0: 5\u00a0/\u00a09');
   });
 
   it('saves progress as the player goes, and Restart erases it', async () => {

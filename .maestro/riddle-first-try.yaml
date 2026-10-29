@@ -1,0 +1,35 @@
+appId: io.github.nhilaire.mysteresbruguieres
+name: Riddle first try - right answer at once, +1 point, stays until Continue
+tags:
+  - radar
+---
+# AC-17 (right answer: green, amazed portrait, +1 point, Continue).
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible:
+      id: "consent-screen"
+    timeout: 30000
+- tapOn:
+    id: "consent-refuse"
+- runFlow: helpers/french.yaml
+- openLink: mysteresbruguieres://seed/7
+- extendedWaitUntil:
+    visible:
+      id: "quiz-screen"
+    timeout: 10000
+- tapOn:
+    id: "quiz-choice-2"
+- assertVisible:
+    id: "quiz-right"
+- assertVisible:
+    id: "quiz-point"
+- assertVisible:
+    id: "auguste-reaction-amazed"
+- takeScreenshot: 13-riddle-first-try
+- tapOn:
+    id: "quiz-continue"
+- extendedWaitUntil:
+    visible:
+      id: "game-step-8"
+    timeout: 10000
