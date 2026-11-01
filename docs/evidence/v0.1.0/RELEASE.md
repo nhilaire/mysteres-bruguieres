@@ -23,3 +23,5 @@ Launch check: alive after 10 s, no fatal error
   user: launcher name, sounds and church bells heard, navigation bar hidden (also after the maps app), overall feel
   (AC-04, AC-34 hearing, AC-35, AC-36). Not done yet: the on-site walk in Bruguières (AC-31), to check later.
   The phone was unplugged before the session log could be saved (no raw/phone-logcat-play.txt).
+- 2026-11-01: the user played the game for real on site in Bruguières with the released v0.1.0 and validates it
+  (AC-31 on-site walk: PASS). No problem reported.
