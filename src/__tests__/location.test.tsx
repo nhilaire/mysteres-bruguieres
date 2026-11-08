@@ -1,7 +1,9 @@
-import { fireEvent, render, screen } from '@testing-library/react-native';
+import { act, fireEvent, render, renderHook, screen } from '@testing-library/react-native';
 import * as Location from 'expo-location';
+import { AppState, AppStateStatus } from 'react-native';
 
 import { classify, locationAdvice, PermissionState } from '../location/permissions';
+import { useGeolocation } from '../location/useGeolocation';
 import { LocationScreen } from '../screens/LocationScreen';
 
 type Response = Awaited<ReturnType<typeof Location.getForegroundPermissionsAsync>>;
@@ -73,5 +75,56 @@ describe('location explainer screen', () => {
     await render(<LocationScreen onContinue={onContinue} onBack={jest.fn()} />);
     await fireEvent.press(await screen.findByTestId('location-without-gps'));
     expect(onContinue).toHaveBeenCalledWith(false);
+  });
+});
+
+describe('radar position (useGeolocation)', () => {
+  type Listener = (state: AppStateStatus) => void;
+  let listeners: Listener[] = [];
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    listeners = [];
+    jest.spyOn(AppState, 'addEventListener').mockImplementation((_type, listener) => {
+      listeners.push(listener as Listener);
+      return { remove: () => (listeners = listeners.filter((l) => l !== listener)) } as never;
+    });
+  });
+
+  afterEach(() => jest.restoreAllMocks());
+
+  it('recovers when location is turned back on while the app was in the background', async () => {
+    jest.mocked(Location.getForegroundPermissionsAsync).mockResolvedValue(response(true, 'granted', true));
+    jest.mocked(Location.hasServicesEnabledAsync).mockResolvedValue(false);
+    let emit: (position: { coords: { latitude: number; longitude: number } }) => void = () => undefined;
+    jest.mocked(Location.watchPositionAsync).mockImplementation(async (_options, callback) => {
+      emit = callback as never;
+      return { remove: jest.fn() };
+    });
+    const { result } = await renderHook(() => useGeolocation(true));
+    await act(async () => undefined);
+    expect(result.current).toEqual({ status: 'unavailable' });
+    expect(Location.watchPositionAsync).not.toHaveBeenCalled();
+
+    // The player turns location on in the system settings, then comes back to the game.
+    jest.mocked(Location.hasServicesEnabledAsync).mockResolvedValue(true);
+    await act(async () => listeners.forEach((l) => l('active')));
+    expect(Location.watchPositionAsync).toHaveBeenCalledTimes(1);
+    await act(async () => emit({ coords: { latitude: 43.7, longitude: 1.4 } }));
+    expect(result.current).toEqual({ status: 'fix', latitude: 43.7, longitude: 1.4 });
+  });
+
+  it('does not restart a running watch when the app comes back to the foreground', async () => {
+    jest.mocked(Location.getForegroundPermissionsAsync).mockResolvedValue(response(true, 'granted', true));
+    jest.mocked(Location.hasServicesEnabledAsync).mockResolvedValue(true);
+    jest.mocked(Location.watchPositionAsync).mockImplementation(async (_options, callback) => {
+      (callback as never as (p: { coords: { latitude: number; longitude: number } }) => void)({ coords: { latitude: 1, longitude: 2 } });
+      return { remove: jest.fn() };
+    });
+    const { result } = await renderHook(() => useGeolocation(true));
+    await act(async () => undefined);
+    expect(result.current).toEqual({ status: 'fix', latitude: 1, longitude: 2 });
+    await act(async () => listeners.forEach((l) => l('active')));
+    expect(Location.watchPositionAsync).toHaveBeenCalledTimes(1);
   });
 });

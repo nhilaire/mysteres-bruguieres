@@ -1,5 +1,6 @@
 import * as Location from 'expo-location';
 import { useEffect, useState } from 'react';
+import { AppState } from 'react-native';
 
 export type GeoState =
   | { status: 'searching' }
@@ -11,12 +12,16 @@ export type GeoState =
 // itself (the location explainer does), so no system dialog pops up in the middle of the game.
 export function useGeolocation(active: boolean): GeoState {
   const [state, setState] = useState<GeoState>({ status: 'searching' });
+  // Bumped to check again (permission, location on) and restart the watch.
+  const [attempt, setAttempt] = useState(0);
+  const unavailable = state.status === 'unavailable';
 
   useEffect(() => {
     if (!active) return;
     let cancelled = false;
     let subscription: Location.LocationSubscription | null = null;
-    setState({ status: 'searching' });
+    // A retry keeps "unavailable" on screen until a position comes: no flash of "searching".
+    if (attempt === 0) setState({ status: 'searching' });
     (async () => {
       try {
         const permission = await Location.getForegroundPermissionsAsync();
@@ -40,7 +45,17 @@ export function useGeolocation(active: boolean): GeoState {
       cancelled = true;
       subscription?.remove();
     };
-  }, [active]);
+  }, [active, attempt]);
+
+  // Location turned back on (or permission granted) in the system settings: check again on return to the game.
+  useEffect(() => {
+    if (!active || !unavailable) return;
+    const sub = AppState.addEventListener('change', (appState) => {
+      if (appState === 'active') setAttempt((n) => n + 1);
+    });
+    // Optional chaining: Jest mocks of AppState.addEventListener may return nothing.
+    return () => sub?.remove();
+  }, [active, unavailable]);
 
   return state;
 }
