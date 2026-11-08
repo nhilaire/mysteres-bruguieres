@@ -37,7 +37,7 @@ Format: `- [ ] T-01 Title (AC-01, AC-02) - proof: unit|e2e|device`. Check the bo
 - [x] T-26 Riddle: the point message follows the engine verdict (no "+1 point" after a wrong answer made before a remount) (AC-16, AC-17) - proof: unit
 - [x] T-27 Final puzzle: the arrival chime plays only when the puzzle gets solved, not when a solved puzzle is shown again (AC-20, AC-25) - proof: unit
 - [x] T-28 Radar: re-check the location and restart the watch when the app comes back to the foreground while the position is unavailable (AC-14, AC-08) - proof: unit
-- [ ] T-29 Consent: a failed consent write is reported and never blocks the consent screen (AC-26, AC-01) - proof: unit
+- [x] T-29 Consent: a failed consent write is reported and never blocks the consent screen (AC-26, AC-01) - proof: unit
 - [ ] T-30 Telemetry: adventure_start only when the adventure really starts (not on Start then back from the location explainer) (AC-26, AC-27) - proof: unit
 
 ## Notes

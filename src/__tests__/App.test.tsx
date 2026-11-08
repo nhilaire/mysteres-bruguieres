@@ -4,6 +4,8 @@ import { fireEvent, render, screen } from '@testing-library/react-native';
 import App from '../App';
 import { appName } from '../config/app';
 import { deviceLanguageTags } from '../i18n/deviceLocale';
+import { saveConsent } from '../telemetry/consentStore';
+import * as telemetry from '../telemetry/telemetry';
 
 // render/fireEvent are awaited: asynchronous in React Native Testing Library 14+, harmless before.
 // The phone is French unless a test says otherwise (jest.setup.js mocks deviceLanguageTags).
@@ -79,5 +81,30 @@ describe('App', () => {
     await render(<App />);
     expect(await screen.findByText("Commencer l'aventure")).toBeTruthy();
     expect(screen.queryByText('Tes données, ton choix')).toBeNull();
+  });
+});
+
+describe('consent write failure', () => {
+  beforeEach(async () => {
+    await AsyncStorage.clear();
+    jest.mocked(deviceLanguageTags).mockReturnValue(['fr-FR']);
+  });
+
+  afterEach(() => jest.restoreAllMocks());
+
+  it('saveConsent reports the failure instead of throwing', async () => {
+    const failure = new Error('disk full');
+    jest.spyOn(AsyncStorage, 'setItem').mockRejectedValueOnce(failure);
+    const reportError = jest.spyOn(telemetry, 'reportError');
+    await expect(saveConsent('granted')).resolves.toBeUndefined();
+    expect(reportError).toHaveBeenCalledWith(failure, 'save_consent');
+  });
+
+  it('leaves the consent screen even when saving and applying the choice fail', async () => {
+    jest.spyOn(AsyncStorage, 'setItem').mockRejectedValue(new Error('disk full'));
+    jest.spyOn(telemetry, 'applyConsent').mockRejectedValue(new Error('firebase down'));
+    await render(<App />);
+    await fireEvent.press(await screen.findByText("J'accepte"));
+    expect(await screen.findByText("Commencer l'aventure")).toBeTruthy();
   });
 });

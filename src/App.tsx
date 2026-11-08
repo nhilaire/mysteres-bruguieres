@@ -18,7 +18,7 @@ import { loadLanguageSetting, saveLanguageSetting } from './storage/languageSett
 import { clearProgress, loadProgress, saveProgress } from './storage/progress';
 import { Consent, loadConsent, saveConsent } from './telemetry/consentStore';
 import { gameEvents } from './telemetry/gameEvents';
-import { applyConsent, track } from './telemetry/telemetry';
+import { applyConsent, reportError, track } from './telemetry/telemetry';
 import { ErrorBoundary } from './ui/ErrorBoundary';
 import { colors } from './ui/theme';
 
@@ -95,8 +95,13 @@ export default function App() {
 
   const decide = useCallback(async (granted: boolean) => {
     const value = granted ? 'granted' : 'denied';
-    await saveConsent(value);
-    await applyConsent(granted);
+    // The screen always moves on, even if saving or applying the choice fails.
+    try {
+      await saveConsent(value);
+      await applyConsent(granted);
+    } catch (error) {
+      reportError(error, 'apply_consent');
+    }
     setConsentState(value);
   }, []);
 
