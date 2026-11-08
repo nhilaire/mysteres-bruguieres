@@ -1,5 +1,5 @@
 import * as Location from 'expo-location';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AppState } from 'react-native';
 
 export type GeoState =
@@ -15,6 +15,10 @@ export function useGeolocation(active: boolean): GeoState {
   // Bumped to check again (permission, location on) and restart the watch.
   const [attempt, setAttempt] = useState(0);
   const unavailable = state.status === 'unavailable';
+  // True when the watch itself was refused (the Play Services "Location Accuracy" sheet declined): that sheet is an
+  // activity over the game, so the app comes back to the foreground right after, and restarting the watch there would
+  // open it again, forever (T-29). The player gets a new attempt by opening the radar again.
+  const watchRefused = useRef(false);
 
   useEffect(() => {
     if (!active) return;
@@ -26,6 +30,7 @@ export function useGeolocation(active: boolean): GeoState {
       try {
         const permission = await Location.getForegroundPermissionsAsync();
         if (!permission.granted || !(await Location.hasServicesEnabledAsync())) {
+          watchRefused.current = false;
           if (!cancelled) setState({ status: 'unavailable' });
           return;
         }
@@ -38,6 +43,7 @@ export function useGeolocation(active: boolean): GeoState {
         if (cancelled) sub.remove();
         else subscription = sub;
       } catch {
+        watchRefused.current = true;
         if (!cancelled) setState({ status: 'unavailable' });
       }
     })();
@@ -47,11 +53,12 @@ export function useGeolocation(active: boolean): GeoState {
     };
   }, [active, attempt]);
 
-  // Location turned back on (or permission granted) in the system settings: check again on return to the game.
+  // Location turned back on (or permission granted) in the system settings: check again on return to the game,
+  // unless the watch itself was refused (see watchRefused).
   useEffect(() => {
     if (!active || !unavailable) return;
     const sub = AppState.addEventListener('change', (appState) => {
-      if (appState === 'active') setAttempt((n) => n + 1);
+      if (appState === 'active' && !watchRefused.current) setAttempt((n) => n + 1);
     });
     // Optional chaining: Jest mocks of AppState.addEventListener may return nothing.
     return () => sub?.remove();

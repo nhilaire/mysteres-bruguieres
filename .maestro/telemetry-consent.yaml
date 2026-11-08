@@ -21,9 +21,22 @@ tags:
       id: "game-step-0"
     timeout: 10000
 - openLink: mysteresbruguieres://seed/3
-- tapOn:
-    text: "No thanks|Non merci|NO THANKS|NON MERCI"
-    optional: true
+# The Google "Location Accuracy" dialog can open over the radar a few seconds after the link (emulator timing): dismiss
+# it as long as the radar is not visible, then wait for the radar.
+- repeat:
+    while:
+      notVisible:
+        id: "radar-screen"
+    times: 5
+    commands:
+      - tapOn:
+          text: "No thanks|Non merci|NO THANKS|NON MERCI"
+          optional: true
+      - extendedWaitUntil:
+          visible:
+            id: "radar-screen"
+          timeout: 3000
+          optional: true
 - extendedWaitUntil:
     visible:
       id: "radar-screen"

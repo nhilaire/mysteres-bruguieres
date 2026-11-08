@@ -114,6 +114,22 @@ describe('radar position (useGeolocation)', () => {
     expect(result.current).toEqual({ status: 'fix', latitude: 43.7, longitude: 1.4 });
   });
 
+  it('does not restart a watch that was refused when the app comes back to the foreground (T-29)', async () => {
+    // The Play Services "Location Accuracy" sheet is an activity over the game: declining it rejects the watch and
+    // brings the app back to the foreground. Restarting the watch there would open the sheet again, forever.
+    jest.mocked(Location.getForegroundPermissionsAsync).mockResolvedValue(response(true, 'granted', true));
+    jest.mocked(Location.hasServicesEnabledAsync).mockResolvedValue(true);
+    jest.mocked(Location.watchPositionAsync).mockRejectedValue(new Error('Location settings are not satisfied'));
+    const { result } = await renderHook(() => useGeolocation(true));
+    await act(async () => undefined);
+    expect(result.current).toEqual({ status: 'unavailable' });
+    expect(Location.watchPositionAsync).toHaveBeenCalledTimes(1);
+    await act(async () => listeners.forEach((l) => l('active')));
+    await act(async () => listeners.forEach((l) => l('active')));
+    expect(Location.watchPositionAsync).toHaveBeenCalledTimes(1);
+    expect(result.current).toEqual({ status: 'unavailable' });
+  });
+
   it('does not restart a running watch when the app comes back to the foreground', async () => {
     jest.mocked(Location.getForegroundPermissionsAsync).mockResolvedValue(response(true, 'granted', true));
     jest.mocked(Location.hasServicesEnabledAsync).mockResolvedValue(true);
