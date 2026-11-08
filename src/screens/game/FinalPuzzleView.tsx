@@ -51,9 +51,15 @@ export function FinalPuzzleView({ numbers, puzzle, onChange, onContinue }: Props
 
   // The revealed word sits below the lines: bring it into view.
   const scroll = useRef<ScrollView>(null);
+  // The chime marks the moment the puzzle gets solved: not when an already solved puzzle is shown again.
+  const wasSolved = useRef(solved);
   useEffect(() => {
-    if (!solved) return;
-    playSound('chime');
+    if (!solved) {
+      wasSolved.current = false;
+      return;
+    }
+    if (!wasSolved.current) playSound('chime');
+    wasSolved.current = true;
     const id = setTimeout(() => scroll.current?.scrollToEnd({ animated: true }), 350);
     return () => clearTimeout(id);
   }, [solved]);

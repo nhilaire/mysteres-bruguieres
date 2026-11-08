@@ -67,3 +67,10 @@ it('shows a solved puzzle read-only with all 7 letters', async () => {
   expect(screen.getByText('GAMOUNA')).toBeTruthy();
   expect(screen.queryByTestId('keypad-validate')).toBeNull();
 });
+
+it('does not replay the chime when an already solved puzzle is shown again', async () => {
+  const solved: PuzzleState = { lines: initialPuzzle.lines.map((line) => ({ ...line, solved: true })) };
+  await render(<Harness onContinue={jest.fn()} start={solved} />);
+  expect(screen.getByText('GAMOUNA')).toBeTruthy();
+  expect(playSound).not.toHaveBeenCalledWith('chime');
+});
