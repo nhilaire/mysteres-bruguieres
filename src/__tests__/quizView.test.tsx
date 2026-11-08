@@ -1,13 +1,22 @@
 import { act, fireEvent, render, screen } from '@testing-library/react-native';
 
 import { playSound, vibrate } from '../feedback/feedback';
+import type { AnswerVerdict } from '../game/adventure';
 import type { QuizScreen } from '../game/scenario';
 import { QuizView, WRONG_MS } from '../screens/game/QuizView';
 
 jest.mock('../feedback/feedback', () => ({ playSound: jest.fn(), stopSound: jest.fn(), vibrate: jest.fn() }));
 
 const quiz: QuizScreen = { type: 'quiz', intro: 'Bravo !', question: 'Combien ?', choices: ['1', '2', '3'], answer: '2' };
-const judge = (choice: string) => (choice === quiz.answer ? 'right' : 'wrong');
+// Plays the engine for one fresh riddle: a point only when the right answer is the first answer.
+function makeJudge(): (choice: string) => AnswerVerdict {
+  let wrong = 0;
+  return (choice) => {
+    if (choice === quiz.answer) return { result: 'right', firstTry: wrong === 0 };
+    wrong += 1;
+    return { result: 'wrong', firstTry: false };
+  };
+}
 
 beforeEach(() => {
   jest.useFakeTimers();
@@ -16,7 +25,7 @@ beforeEach(() => {
 
 it('a wrong answer turns red with the head-scratching portrait, then allows a retry', async () => {
   const onNext = jest.fn();
-  await render(<QuizView quiz={quiz} solved={false} onAnswer={judge} onNext={onNext} />);
+  await render(<QuizView quiz={quiz} solved={false} onAnswer={makeJudge()} onNext={onNext} />);
   await fireEvent.press(screen.getByTestId('quiz-choice-0'));
   expect(screen.getByTestId('quiz-wrong')).toBeTruthy();
   expect(screen.getByTestId('auguste-reaction-worried')).toBeTruthy();
@@ -33,7 +42,7 @@ it('a wrong answer turns red with the head-scratching portrait, then allows a re
 
 it('the right answer turns green with the amazed portrait and stays until Continue', async () => {
   const onNext = jest.fn();
-  await render(<QuizView quiz={quiz} solved={false} onAnswer={judge} onNext={onNext} />);
+  await render(<QuizView quiz={quiz} solved={false} onAnswer={makeJudge()} onNext={onNext} />);
   await fireEvent.press(screen.getByTestId('quiz-choice-1'));
   expect(screen.getByTestId('quiz-right')).toBeTruthy();
   expect(screen.getByTestId('auguste-reaction-amazed')).toBeTruthy();
@@ -46,12 +55,19 @@ it('the right answer turns green with the amazed portrait and stays until Contin
 });
 
 it('says there is no point when the right answer came after a wrong one', async () => {
-  await render(<QuizView quiz={quiz} solved={false} onAnswer={judge} onNext={jest.fn()} />);
+  await render(<QuizView quiz={quiz} solved={false} onAnswer={makeJudge()} onNext={jest.fn()} />);
   await fireEvent.press(screen.getByTestId('quiz-choice-0'));
   await act(async () => jest.advanceTimersByTime(WRONG_MS));
   await fireEvent.press(screen.getByTestId('quiz-choice-1'));
   expect(screen.getByTestId('quiz-no-point')).toBeTruthy();
   expect(screen.queryByText(/\+1/)).toBeNull();
+});
+
+it('trusts the engine verdict: no point when the first answer on this screen is right but not the first try', async () => {
+  await render(<QuizView quiz={quiz} solved={false} onAnswer={() => ({ result: 'right', firstTry: false })} onNext={jest.fn()} />);
+  await fireEvent.press(screen.getByTestId('quiz-choice-1'));
+  expect(screen.getByTestId('quiz-no-point')).toBeTruthy();
+  expect(screen.queryByTestId('quiz-point')).toBeNull();
 });
 
 it('a solved riddle is read-only', async () => {

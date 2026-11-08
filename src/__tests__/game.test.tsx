@@ -120,3 +120,24 @@ describe('final puzzle and score', () => {
     expect(latest.score).toBe(6);
   });
 });
+
+describe('riddle point message', () => {
+  // A wrong answer given before a remount (app killed then Continue, arrows, language change) is in the progress.
+  it('says there is no point when the progress already holds a wrong answer for this riddle', async () => {
+    const { SCENARIOS } = require('../i18n/scenario');
+    const quiz = SCENARIOS.fr.screens[4];
+    const start: Progress = { ...at(4), wrong: { 4: 1 } };
+    let latest = start;
+    function Tracked() {
+      const [progress, setProgress] = useState(start);
+      latest = progress;
+      return <GameScreen progress={progress} onProgress={(u) => setProgress(u)} onMenu={jest.fn()} onRestart={jest.fn()} />;
+    }
+    await render(<Tracked />);
+    await fireEvent.press(screen.getByTestId(`quiz-choice-${quiz.choices.indexOf(quiz.answer)}`));
+    expect(screen.getByTestId('quiz-right')).toBeTruthy();
+    expect(screen.getByTestId('quiz-no-point')).toBeTruthy();
+    expect(screen.queryByTestId('quiz-point')).toBeNull();
+    expect(latest.score).toBe(0);
+  });
+});

@@ -76,6 +76,9 @@ export function arrive(scenario: Scenario, progress: Progress, radarIndex: numbe
 
 export type AnswerResult = 'right' | 'wrong' | 'ignored';
 
+// The engine's verdict on one answer: `firstTry` says whether a right answer scored the point.
+export type AnswerVerdict = { result: AnswerResult; firstTry: boolean };
+
 // A point only when the right answer is the first answer given on that riddle. A solved riddle is read-only.
 export function answer(
   scenario: Scenario,

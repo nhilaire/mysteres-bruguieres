@@ -3,7 +3,7 @@ import { Pressable, ScrollView, StyleSheet, Text, useWindowDimensions, View } fr
 
 import type { Reaction } from '../../assets';
 import { playSound, vibrate } from '../../feedback/feedback';
-import type { AnswerResult } from '../../game/adventure';
+import type { AnswerVerdict } from '../../game/adventure';
 import { questionLines, QuizScreen } from '../../game/scenario';
 import { useI18n } from '../../i18n/I18nProvider';
 import { AugustePortrait } from '../../ui/AugustePortrait';
@@ -15,7 +15,7 @@ export const WRONG_MS = 1500;
 type Props = {
   quiz: QuizScreen;
   solved: boolean;
-  onAnswer: (choice: string) => AnswerResult;
+  onAnswer: (choice: string) => AnswerVerdict;
   onNext: () => void;
 };
 
@@ -27,8 +27,8 @@ export function QuizView({ quiz, solved, onAnswer, onNext }: Props) {
   const [feedback, setFeedback] = useState<Feedback>(null);
   // The verdict (and Auguste's reaction) stays until the next answer; the red button only for WRONG_MS.
   const [verdict, setVerdict] = useState<'right' | 'wrong' | null>(null);
-  // A wrong answer before the right one: the right answer then scores no point.
-  const [missed, setMissed] = useState(false);
+  // The engine's verdict on the right answer: no point when a wrong answer came first, even before a remount.
+  const [scored, setScored] = useState(false);
 
   // The red state lasts WRONG_MS; a right answer stays on screen until the player taps Continue.
   useEffect(() => {
@@ -39,11 +39,11 @@ export function QuizView({ quiz, solved, onAnswer, onNext }: Props) {
 
   const choose = (choice: string) => {
     if (feedback || verdict === 'right') return;
-    const result = onAnswer(choice);
+    const { result, firstTry } = onAnswer(choice);
     if (result === 'ignored') return;
     setFeedback({ choice, result });
     setVerdict(result);
-    if (result === 'wrong') setMissed(true);
+    if (result === 'right') setScored(firstTry);
     playSound(result);
     vibrate(result);
   };
@@ -98,8 +98,8 @@ export function QuizView({ quiz, solved, onAnswer, onNext }: Props) {
       </View>
       {!solved && !verdict && <Text style={styles.waiting}>{t.quiz.waiting}</Text>}
       {verdict === 'right' && (
-        <Text style={styles.point} testID={missed ? 'quiz-no-point' : 'quiz-point'}>
-          {missed ? t.quiz.noPoint : t.quiz.point}
+        <Text style={styles.point} testID={scored ? 'quiz-point' : 'quiz-no-point'}>
+          {scored ? t.quiz.point : t.quiz.noPoint}
         </Text>
       )}
       {(solved || verdict === 'right') && <Button label={t.quiz.continue} onPress={onNext} testID="quiz-continue" />}

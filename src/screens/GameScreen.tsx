@@ -2,7 +2,7 @@ import { useCallback, useEffect } from 'react';
 import { BackHandler, Pressable, StatusBar, StyleSheet, Text, View } from 'react-native';
 import Animated, { Keyframe } from 'react-native-reanimated';
 
-import { answer, arrive, canGoBack, canGoForward, goBack, goForward, next, Progress, rate } from '../game/adventure';
+import { answer, AnswerVerdict, arrive, canGoBack, canGoForward, goBack, goForward, next, Progress, rate } from '../game/adventure';
 import { PuzzleState } from '../game/puzzle';
 import { riddleAnswers, stepOf } from '../game/scenario';
 import { useI18n } from '../i18n/I18nProvider';
@@ -67,11 +67,11 @@ export function GameScreen({ progress, onProgress, onMenu, onRestart, events = {
     [events, index, onProgress, progress.reached, scenario],
   );
 
-  const onAnswer = (choice: string) => {
+  const onAnswer = (choice: string): AnswerVerdict => {
     const outcome = answer(scenario, progress, index, choice);
     if (outcome.result === 'right') events.onRiddleSolved?.(stepOf(scenario, index), outcome.firstTry, progress.wrong[index] ?? 0);
     onProgress(() => outcome.progress);
-    return outcome.result;
+    return { result: outcome.result, firstTry: outcome.firstTry };
   };
 
   let content: React.ReactNode;
