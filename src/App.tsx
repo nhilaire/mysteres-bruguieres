@@ -129,11 +129,16 @@ export default function App() {
 
   const updateProgress = useCallback((update: (p: Progress) => Progress) => setProgress(update), []);
 
-  const start = useCallback(async () => {
+  // adventure_start is counted when the game really opens, not when the player backs out of the location explainer.
+  const enterGame = useCallback(() => {
     track('adventure_start', { resumed: isStarted(progress), step: progress.reached.length });
-    if (withoutGps || (await checkLocationPermission()) === 'granted') setRoute('game');
+    setRoute('game');
+  }, [progress]);
+
+  const start = useCallback(async () => {
+    if (withoutGps || (await checkLocationPermission()) === 'granted') enterGame();
     else setRoute('location');
-  }, [withoutGps, progress]);
+  }, [withoutGps, enterGame]);
 
   const restart = useCallback(async () => {
     await clearProgress();
@@ -169,7 +174,7 @@ export default function App() {
       <LocationScreen
         onContinue={(withGps) => {
           if (!withGps) setWithoutGps(true);
-          setRoute('game');
+          enterGame();
         }}
         onBack={toTitle}
       />

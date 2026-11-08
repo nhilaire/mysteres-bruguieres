@@ -1,8 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { logEvent, setAnalyticsCollectionEnabled } from '@react-native-firebase/analytics';
 import { setCrashlyticsCollectionEnabled } from '@react-native-firebase/crashlytics';
-import { fireEvent, render, screen } from '@testing-library/react-native';
+import { act, fireEvent, render, screen } from '@testing-library/react-native';
 import * as Location from 'expo-location';
+import { BackHandler } from 'react-native';
 
 import App from '../App';
 import { initialPuzzle } from '../game/puzzle';
@@ -71,6 +72,41 @@ describe('consent gate in the app', () => {
     await fireEvent(screen.getByTestId('settings-telemetry'), 'valueChange', false);
     await fireEvent(screen.getByTestId('settings-sound'), 'valueChange', false);
     expect(logEvent).not.toHaveBeenCalled();
+  });
+
+  describe('adventure_start without the location permission', () => {
+    let backHandlers: Parameters<typeof BackHandler.addEventListener>[1][] = [];
+    beforeEach(async () => {
+      backHandlers = [];
+      jest.spyOn(BackHandler, 'addEventListener').mockImplementation((_type, handler) => {
+        backHandlers.push(handler);
+        return { remove: () => (backHandlers = backHandlers.filter((h) => h !== handler)) };
+      });
+      jest.mocked(Location.getForegroundPermissionsAsync).mockResolvedValue({ granted: false, status: 'undetermined', canAskAgain: true } as never);
+      await AsyncStorage.setItem('telemetry.consent.v1', 'granted');
+    });
+    afterEach(() => jest.restoreAllMocks());
+
+    it('is not sent when the player backs out of the location explainer', async () => {
+      await render(<App />);
+      await fireEvent.press(await screen.findByTestId('title-start'));
+      await screen.findByTestId('location-state-undetermined');
+      await act(async () => {
+        backHandlers[backHandlers.length - 1]({} as never);
+      });
+      await screen.findByTestId('title-start');
+      expect(logEvent).not.toHaveBeenCalledWith(expect.anything(), 'adventure_start', expect.anything());
+    });
+
+    it('is sent once when the player enters the game from the location explainer', async () => {
+      await render(<App />);
+      await fireEvent.press(await screen.findByTestId('title-start'));
+      await fireEvent.press(await screen.findByTestId('location-without-gps'));
+      await screen.findByTestId('game-screen');
+      expect(jest.mocked(logEvent).mock.calls.filter(([, name]) => name === 'adventure_start')).toEqual([
+        [expect.anything(), 'adventure_start', { resumed: 0, step: 0 }],
+      ]);
+    });
   });
 
   it('reports a settings change when statistics are on', async () => {
