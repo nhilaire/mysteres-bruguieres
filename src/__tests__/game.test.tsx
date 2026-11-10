@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { act, fireEvent, render, screen } from '@testing-library/react-native';
 import * as Location from 'expo-location';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Alert } from 'react-native';
 
 import App, { summarize } from '../App';
@@ -102,7 +102,9 @@ describe('final puzzle and score', () => {
     let latest = start;
     function Tracked() {
       const [progress, setProgress] = useState(start);
-      latest = progress;
+      useEffect(() => {
+        latest = progress;
+      }, [progress]);
       return <GameScreen progress={progress} onProgress={(u) => setProgress(u)} onMenu={jest.fn()} onRestart={jest.fn()} />;
     }
     await render(<Tracked />);
@@ -130,7 +132,9 @@ describe('riddle point message', () => {
     let latest = start;
     function Tracked() {
       const [progress, setProgress] = useState(start);
-      latest = progress;
+      useEffect(() => {
+        latest = progress;
+      }, [progress]);
       return <GameScreen progress={progress} onProgress={(u) => setProgress(u)} onMenu={jest.fn()} onRestart={jest.fn()} />;
     }
     await render(<Tracked />);

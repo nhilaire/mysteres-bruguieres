@@ -57,7 +57,9 @@ describe('vibrations', () => {
     ['wrong', 'notificationAsync'],
   ] as const)('%s triggers %s when vibrations are on', (kind, api) => {
     vibrate(kind);
-    expect(Haptics[api]).toHaveBeenCalled();
+    // The API name comes from the table: a computed access on the namespace needs a plain record.
+    const haptics = Haptics as unknown as Record<string, jest.Mock>;
+    expect(haptics[api]).toHaveBeenCalled();
   });
 
   it('never vibrates when vibrations are off', () => {

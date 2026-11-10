@@ -27,12 +27,15 @@ export function AugustePortrait({ width, pose = 0, reaction, talking = false, br
   const { t } = useI18n();
   const height = width * PORTRAIT_RATIO;
   const [step, setStep] = useState(0);
+  // The mouth frames start over at the first one once Auguste stops talking (state adjusted on the prop change).
+  const [wasTalking, setWasTalking] = useState(talking);
+  if (talking !== wasTalking) {
+    setWasTalking(talking);
+    if (!talking) setStep(0);
+  }
 
   useEffect(() => {
-    if (!talking) {
-      setStep(0);
-      return;
-    }
+    if (!talking) return;
     const id = setInterval(() => setStep((s) => s + 1), MOUTH_FRAME_MS);
     return () => clearInterval(id);
   }, [talking]);

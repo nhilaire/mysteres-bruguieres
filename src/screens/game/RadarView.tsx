@@ -37,7 +37,8 @@ export function RadarView({ target, step, onArrive, onLost }: Props) {
   const compass = useCompass(true);
   const [arrived, setArrived] = useState(false);
   const arrival = useRef<ArrivalState>(initialArrival);
-  const [arrowAngle, setArrowAngle] = useState<number | null>(null);
+  // The arrow angle smoothed step by step: one step per new relative bearing (the last one seen is kept to step once).
+  const [arrow, setArrow] = useState<{ relative: number | null; angle: number | null }>({ relative: null, angle: null });
 
   const hasFix = geo.status === 'fix';
   const distance = hasFix ? distanceMeters(geo.latitude, geo.longitude, target.latitude, target.longitude) : Number.NaN;
@@ -65,10 +66,11 @@ export function RadarView({ target, step, onArrive, onLost }: Props) {
   }, [arrived, onArrive]);
 
   // The arrow takes the shortest way round (no 359° -> 0° spin).
-  useEffect(() => {
-    if (relative === null) return;
-    setArrowAngle((current) => (current === null ? relative : approachAngle(current, relative, 0.5)));
-  }, [relative]);
+  if (relative !== arrow.relative) {
+    const angle = relative === null ? arrow.angle : arrow.angle === null ? relative : approachAngle(arrow.angle, relative, 0.5);
+    setArrow({ relative, angle });
+  }
+  const arrowAngle = arrow.angle;
 
   // Proximity rhythm: ping and haptic tick only near the place.
   const pulseSeconds = pulseIntervalSeconds(distance);

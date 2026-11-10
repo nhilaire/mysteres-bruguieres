@@ -75,11 +75,8 @@ export function FinalPuzzleView({ numbers, puzzle, onChange, onContinue }: Props
     } else {
       playSound('wrong');
       vibrate('wrong');
-      shake.value = withSequence(
-        withTiming(-10, { duration: 50 }),
-        withTiming(10, { duration: 80 }),
-        withTiming(-6, { duration: 70 }),
-        withTiming(0, { duration: 60 }),
+      shake.set(
+        withSequence(withTiming(-10, { duration: 50 }), withTiming(10, { duration: 80 }), withTiming(-6, { duration: 70 }), withTiming(0, { duration: 60 })),
       );
     }
     onChange(state, result);

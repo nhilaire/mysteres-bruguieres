@@ -19,13 +19,18 @@ export function useGeolocation(active: boolean): GeoState {
   // activity over the game, so the app comes back to the foreground right after, and restarting the watch there would
   // open it again, forever (T-29). The player gets a new attempt by opening the radar again.
   const watchRefused = useRef(false);
+  // Becoming active starts a new search; a retry keeps "unavailable" on screen until a position comes: no flash of
+  // "searching" (state adjusted on the prop change, before the watch starts).
+  const [wasActive, setWasActive] = useState(active);
+  if (active !== wasActive) {
+    setWasActive(active);
+    if (active && attempt === 0) setState({ status: 'searching' });
+  }
 
   useEffect(() => {
     if (!active) return;
     let cancelled = false;
     let subscription: Location.LocationSubscription | null = null;
-    // A retry keeps "unavailable" on screen until a position comes: no flash of "searching".
-    if (attempt === 0) setState({ status: 'searching' });
     (async () => {
       try {
         const permission = await Location.getForegroundPermissionsAsync();
